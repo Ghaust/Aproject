@@ -555,7 +555,7 @@ void moveObus(ObusList *obusList, char **map){
                 printf("✴");
                 break;
         }
-        obusList = obusList->firstObus;
+        obusList->firstObus = obusList->firstObus->next;
     }
 }
 
