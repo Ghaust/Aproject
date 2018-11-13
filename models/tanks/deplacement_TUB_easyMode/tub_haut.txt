@@ -1,0 +1,5 @@
+MMMM|MMMM
+M   |   M
+M |LBL| M
+M 3---2 M
+MMMMMMMMM

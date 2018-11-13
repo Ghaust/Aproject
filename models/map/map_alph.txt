@@ -1,0 +1,53 @@
+0----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------1
+|EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEP                             PEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE|
+|EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEP                             PEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE|
+|EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEP                             PEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE|
+|PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP                             PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP|
+|AAR                                                                                                                                                                    AAAAAAAAAAAAAAAAA|
+|AAR                                                                                                                                                                    AAAAAAAAAAAAAAAAA|
+|AAR                                                  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                                                                                   AAAAAAAAAAAAAAAAA|
+|AAR                                                  RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR                                     AAAAAAAAAAAAARRRRRRRRRRR                      AAAAAAAAAAAAAAAAA|
+|AAR                                                                                                                      AAAAAAAAAAAAARRRRRRRRRRR                      AAAAAAAAAAAAAAAAA|
+|AAR                                                                                                                      AAAAAAAAAAAAARRRRRRRRRRR                      AAAAAAAAAAAAAAAAA|
+|AAR                    RAAR                           RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR               RAAAAR               AAAAAAAAAAAAARRRRRRRRRRR                      AAAAAAAAAAAAAAAAA|
+|AAR                    RAAR                           RRAAAAAAAAAAAAAAAAAAAAAAAAAAARR               RAAAAR               AAAAAAAAAAAAARRRRRRRRRRR                      AAAAAAAAAAAAAAAAA|
+|AAR                    RAAR                           RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR               RAAAAR                                                                              |
+|                       RAAR                           RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR               RAAAAR                                                                              |
+|                       RAAR                           RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR               RAAAAR                                                                              |
+|                  RRRRRRAARRRRRR                      RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR               RAAAAR                                                                              |
+|                       RAAR                           RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR               RAAAAR                                                                              |
+|                       RAAR                           RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR                                                                                                   |
+|                       RAAR                           RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR                                                                                                   |
+|                       RAAR                           RRAEEEEEEEEEEEEEEEEEEEEEEEEEARR                                                                                                   |
+|                       RAAR                           RRAAAAAAAAAAAAAAAAAAAAAAAAAAARR                                                  AAAAAAAAAAAA                     AAAAAAAAAAAAAAAA|
+|                       RAAR                           RRAAAAAAAAAAAAAAAAAAAAAAAAAAARR                                                  AAAAAAAAAAAA                     AAAAAAAAAAAAAAAA|
+|                       RAAR                           RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR                                                  AAAAAAAAAAAA                     AAAAAAAAAAAAAAAA|
+|                                                                                                         RRRRAAAAAAAAAAR               AAAAAAAAAAAA                     AAAAAAAAAAAAAAAA|
+|                                                                                                         RRRRAAAAAAAAAAR               AAAAAAAAAAAA                     AAAAAAAAAAAAAAAA|
+|                                                                                                         RRRRAAAAAAAAAAR               AAAAAAAAAAAA                     AAAAAAAAAAAAAAAA|
+|                                                                                    RRRRRR               RRRRRRRRRRRRRRR                                                AAAAAAAAAAAAAAAA|
+|                                                                                    RAAAAR                                                                              AAAAAAAAAAAAAAAA|
+|                                                                                    RAAAAR                                                                              AAAAAAAAAAAAAAAA|
+|                                                                                    RAAAAR                                                                              AAAAAAAAAAAAAAAA|
+|        RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR                                                                                             AAAAAAAAAAAAAAAA|
+|        RRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARRR                         RAAAARAAAAR                                                         AAAAAAAAAAAAAAAA|
+|        RRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARR                         RAAAARAAAAR                                                         AAAAAAAAAAAAAAAA|
+|        RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRAAAAAAARR                         RAAAARAAAAR                                                         AAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                                         AAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                                         AAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|                                                                RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|AAAAA      RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR                      RRAAAAAAARR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|AAAAA      R                             R                      RRRRRRRRRRR                         RAAAARAAAAR                                 AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|AAAAA      R                             R                                                                                                      AAAAAAAAAAAAARRRRRRRRRRRAAAAAAAAAAAAAAAA|
+|AAAAA      R              K              R                                                                                                      AAAAAAAAAAAAARRRRRRRRRRRAAAAARRRRRRRRRRR|
+|AAAAA      R                             R                                                                                                      AAAAAAAAAAAAARRRRRRRRRRRAAAAARRRRRRRRRRR|
+3----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------2

@@ -1,0 +1,7 @@
+M = Mur bLindé = ▓
+C = Canon = ║
+L = Ligne = ─
+B = Bloc noir = █
+D = caractère droit = ╝
+G = caractère gauche = ╚
+U = under = ═

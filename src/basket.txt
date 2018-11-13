@@ -1,0 +1,210 @@
+/*
+                    switch(number) {
+
+                        case 1:
+                            tankE->direction = 'H';
+                            if(isFree(map, tankE) ){
+                                
+                                deleteTank(tankE, map);
+                                
+                                replaceMatrixToAnother(tankH_ts, tankE->carrosserie);
+                                tankE->posX--;
+                                moveTank(tankE, map);
+                            }
+                             break;
+                    
+                        case 2:
+                            
+                            tankE->direction = 'B';
+                            if(isFree(map, tankE)){
+                                deleteTank(tankE, map);
+                                replaceMatrixToAnother(tankB_ts, tankE->carrosserie);
+                                
+                                tankE->posX++;
+                                moveTank(tankE, map);
+                                
+                            }
+                             break;
+                        case 3:
+                                
+                                tankE->direction = 'D';
+                                if((isFree(map, tankE))){
+
+                                    deleteTank(tankE, map);
+                                    replaceMatrixToAnother(tankD_ts, tankE->carrosserie);
+                                    tankE->posY++;
+                                    moveTank(tankE, map);
+                                }
+                                 break;
+                        
+                        case 4:
+                                tankE->direction = 'G';
+                                if(isFree(map, tankE)) {
+                                    
+                                    deleteTank(tankE, map);
+                                    replaceMatrixToAnother(tankG_ts, tankE->carrosserie);
+                                    
+                                    tankE->posY--;
+                                    moveTank(tankE, map);
+                                
+                                }
+                                 break;
+                    }
+                    */
+
+
+                    
+                    /*Vérification fonctionnement liste */
+    Tank *t = malloc(1*sizeof(Tank));
+    Tank *t2 = malloc(1*sizeof(Tank));
+    Tank *t3 = malloc(1*sizeof(Tank));
+    Tank *t4 = malloc(1*sizeof(Tank));
+    Tank *t5 = malloc(1*sizeof(Tank));
+    Tank *t6 = malloc(1*sizeof(Tank));
+    Tank *t7 = malloc(1*sizeof(Tank));
+
+    t = initTankPlayer(t);
+    t2 = initTankEnemy(t2);
+    t3 = initTankEnemy(t3);
+    t4 = initTankEnemy(t4);
+    t5 = initTankEnemy(t5);
+    t6 = initTankEnemy(t6);
+    t7 = initTankEnemy(t7);
+
+    TankList *maListeDeTanks = initTankList(t);
+
+    insertNewTank(maListeDeTanks, t);
+    insertNewTank(maListeDeTanks, t2);
+    insertNewTank(maListeDeTanks, t3);
+    insertNewTank(maListeDeTanks, t4);
+    insertNewTank(maListeDeTanks, t5);
+    insertNewTank(maListeDeTanks, t6);
+    insertNewTank(maListeDeTanks, t7);
+
+    dispTankList(maListeDeTanks);
+
+    deleteFirstTank(maListeDeTanks);
+    dispTankList(maListeDeTanks);
+
+    deleteTankById(maListeDeTanks, 3);
+    dispTankList(maListeDeTanks);
+
+      /*  int posX=0, posY=0;
+   Obus *obus = malloc(1*sizeof(Obus)); 
+   if(tank->type == 'P')
+        obus->type='P';
+    else
+        obus->type='E';
+
+   obus->caractere = 'O';
+   
+   switch(tank->direction){
+       case 'H':
+            obus->posY=(tank->posY)+4;
+            posY = obus->posY;
+            obus->posX = (tank->posX)-1;
+
+            for(posX=(tank->posX)-1; posX<(nbLineMap - (tank->posX)-1); posX--){
+                if(map[posX][posY]==' '){
+                    moveObus(obus, map);
+                    deleteObus(obus, map);
+                }
+                else{
+                    map[posX][posY]= ' ';
+                    printf("%c", map[posX][posY]);
+                    break;
+                }
+                obus->posX = posX;
+            }
+            break;
+       case 'B':
+            obus->posY=(tank->posY)+4;
+            posY = obus->posY;
+            obus->posX = (tank->posX)+nbLineTank+1;
+
+            for(posX=((tank->posX)+nbLineTank+1); posX<(nbLineMap - (tank->posX)+nbLineTank+1); posX++){
+                if(map[posX][posY]==' '){
+                    moveObus(obus, map);
+                    deleteObus(obus, map);
+                }
+                else{
+                    map[posX][posY]= ' ';
+                    printf("%c",map[posX][posY]);
+                    break;
+                }
+                obus->posX = posX;
+            }
+
+            break;
+        case 'G':
+            obus->posX=(tank->posY)+2; // canon
+            posX = obus->posX;
+            obus->posY=(tank->posY)-1;
+
+            for(posY=((tank->posY)-1); posY<(nbColMap - (tank->posY)-1 ); posY--){
+                if(map[posX][posY]==' '){
+                    map[posX][posY]= obus->caractere;
+                    printf("%c", map[posX][posY]);
+
+                    map[posX][posY+1]=' ';
+                    //Ici - car on descend
+                    printf("%c", map[posX][posY+1]);
+                }
+                else{
+                    map[posX][posY]= ' ';
+                    printf("%c",map[posX][posY]);
+                    break;
+                }
+                obus->posY = posY;
+            }
+            break;
+       case 'D':
+            obus->posX=(tank->posY)+2; // canon
+            posX = obus->posX;
+
+            obus->posY=(tank->posY)+nbColTank+1;
+
+            for(posY=((tank->posY)+nbColTank+1); posY<(nbColMap - ((tank->posY)+nbColTank+1) ); posY++){
+                if(map[posX][posY]==' '){
+                    moveObus(obus, map);
+                    deleteObus(obus, map);
+                    /*
+                    map[posX][posY]= obus->caractere;
+                    printf("%c", map[posX][posY]);
+
+                    map[posX][posY-1]=' ';
+                    //Ici - car on descend
+                    printf("%c", map[posX][posY-1]);
+                    
+                }
+                else{
+                    map[posX][posY]= ' ';
+                    printf("%c",map[posX][posY]);
+                    break;
+                }
+                obus->posY = posY;
+            }
+            break;
+     }
+*/
+
+
+void moveObus(Obus *obus, char **map){
+    map[obus->posX][obus->posY]=obus->caractere;
+    printf("%c", map[obus->posX][obus->posY]);
+}
+
+void deleteObus(Obus *obus, char **map){
+    map[obus->posX][obus->posY]=' ';
+    printf("%c", map[obus->posX][obus->posY]);
+}
+
+void testMatrix(char **mat, int nbL, int nbC){
+    int i, j;
+
+    for(i=0; i<nbLineMap; i++){
+        for(j=0; j<nbColMap; j++){
+            mat[i][j]=' ';
+        }
+    }
+}

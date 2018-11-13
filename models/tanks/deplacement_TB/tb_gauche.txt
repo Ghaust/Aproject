@@ -1,0 +1,5 @@
+IIIIIIIII
+T     -1T
+ -----B|T
+T     -2T
+IIIIIIIII

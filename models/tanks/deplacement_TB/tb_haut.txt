@@ -1,0 +1,5 @@
+MLLL|LLLM
+M   |   M
+M |LBL| M
+M 3---2 M
+MLLLLLLLM
