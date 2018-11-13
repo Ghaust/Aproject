@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "headers.h"
 
 //Cette fonction permet de réserver l'espace mémoire nécessaire pour notre matrice
 char ** matrixAlloc(int nbL, int nbC){
@@ -40,26 +40,6 @@ void freeMat(int nbL, char **mat){
     for(i=0; i<nbL; i++){
         free(*(mat+i));
     }
-}
-
-
-void loadTankInMatrix(char **mat, Tank *tank){
-    int i, j;
-    int k = 0, l = 0;
-    //insertNewTank(tankList, tank);
-
-    for(i=tank->posX; i<tank->posX+nbLineTank; i++){
-        l=0;
-        for(j=tank->posY; j<tank->posY+nbColTank; j++){
-            mat[i][j] = tank->bodyWork[k][l];
-
-            
-            l++;
-        }
-        k++;
-    }
-    
-
 }
 
 void replaceMatrixWithAnother(char **mat1, char **mat2){

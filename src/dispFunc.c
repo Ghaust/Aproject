@@ -1,5 +1,66 @@
-#include "dispFunc.h"
 #include "matrix.h"
+
+
+void printSwitch(char c){
+    switch(c){
+                    case '0':
+                        printf("╔");
+                        break;
+                    case '1':
+                        printf("╗");
+                        break;
+                    case '2':
+                        printf("╝");
+                        break;
+                    case '3':
+                        printf("╚");
+                        break;
+                    case '-':
+                        printf("═");
+                        break;
+                    case '|':
+                        printf("║");
+                        break;
+                    case 'E':
+                        printf("\033[34m▓\033[00m");
+                        break;
+                     
+                    case 'A':
+                        printf("\033[31m☎\033[00m");
+                        break;
+                    case 'R':
+                        printf("\033[37m☎\033[00m");
+                        break;
+                    case 'P': //palmier
+                        printf("\033[37m☎\033[00m");
+                        break;     
+                    case 'O':
+                        printf("O");
+                        break;
+                    case 'M':
+                        printf("▓");
+                        break;
+                    case 'L':
+                        printf("_");
+                        break;
+                    case 'T':
+                        printf("|");
+                        break;
+                    case 'B':
+                        printf("█");
+                        break;
+                    case 'I':
+                        printf("▀");
+                        break;
+                    case 'U':
+                        printf("─");
+                        break;
+                    default:
+                        printf("%c", c);
+        }
+    
+}
+
 
 void dispMatrix(int nbL, int nbC, char **mat){
     int i, j;
@@ -9,6 +70,15 @@ void dispMatrix(int nbL, int nbC, char **mat){
         }
         printf("\n");
     }
+}
+
+//Permet d'afficher le menu
+void dispFile(FILE *file){
+    int c = 0;
+    while( (c = fgetc(file)) != EOF){
+        printf("%c", (char)c);
+    }
+    
 }
 
 int deployMenu(){
@@ -58,23 +128,12 @@ int deployMenu(){
 }
 
 
-
-//Permet d'afficher le menu
-void dispFile(FILE *file){
-    int c = 0;
-    while( (c = fgetc(file)) != EOF){
-        printf("%c", (char)c);
-    }
-    
-}
-
-
 void playGame_easyMode(int playerChoice){
 
     if(playerChoice == 1){
         //Obus *oPlayer = initObus(oPlayer); 
         //régler le pb d'inclusion de fichiers
-        //ObusList *obusList = initObusList(oPlayer);
+        ObusList *obusList = initObusList();
         //TankList *tankList = NULL;
         
         Tank *tankJ = malloc(1*sizeof(Tank));
@@ -141,29 +200,26 @@ void playGame_easyMode(int playerChoice){
         while (1){
 
                     c = key_pressed();
-
-
-                    /*moveTankEnemy(tankE,
-                    tankH_ts, tankB_ts, tankG_ts, tankD_ts,
-                    tankH_tb, tankB_tb, tankG_tb, tankD_tb,
-                    tankH_tub, tankB_tub, tankG_tub, tankD_tub,
-                    map);*/
-
                 
                     moveTankPlayer(tankJ,
                     tankH_ts, tankB_ts, tankG_ts, tankD_ts,
                     tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                     tankH_tub, tankB_tub, tankG_tub, tankD_tub,
-                    map, c);
+                    map, c, obusList);
 
-                    //
+                    /*
+                    moveTankEnemy(tankE,
+                    tankH_ts, tankB_ts, tankG_ts, tankD_ts,
+                    tankH_tb, tankB_tb, tankG_tb, tankD_tb,
+                    tankH_tub, tankB_tub, tankG_tub, tankD_tub,
+                    map);*/
+
 
                     //Lié aux déplacements de l'utilisateur
                    
 
                 }
         
-       // dispTankList(tankList);
 
 		freeMat(nbLineMap, map);
         freeMat(nbLineTank, tankJ->bodyWork);
@@ -188,62 +244,3 @@ void playGame_easyMode(int playerChoice){
         printf("Nique ta mère.");
 }
 
-void printSwitch(char c){
-    switch(c){
-                    case '0':
-                        printf("╔");
-                        break;
-                    case '1':
-                        printf("╗");
-                        break;
-                    case '2':
-                        printf("╝");
-                        break;
-                    case '3':
-                        printf("╚");
-                        break;
-                    case '-':
-                        printf("═");
-                        break;
-                    case '|':
-                        printf("║");
-                        break;
-                    case 'E':
-                        printf("\033[34m▓\033[00m");
-                        break;
-                     
-                    case 'A':
-                        printf("\033[31m☎\033[00m");
-                        break;
-                    case 'R':
-                        printf("\033[37m☎\033[00m");
-                        break;
-                    case 'P': //palmier
-                        printf("\033[37m☎\033[00m");
-                        break;     
-                    case 'O':
-                        printf("O");
-                        break;
-                    case 'M':
-                        printf("▓");
-                        break;
-                    case 'L':
-                        printf("_");
-                        break;
-                    case 'T':
-                        printf("|");
-                        break;
-                    case 'B':
-                        printf("█");
-                        break;
-                    case 'I':
-                        printf("▀");
-                        break;
-                    case 'U':
-                        printf("─");
-                        break;
-                    default:
-                        printf("%c", c);
-        }
-    
-}

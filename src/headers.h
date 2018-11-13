@@ -15,5 +15,61 @@
 #define nbLineMap 53
 #define nbColMap 186
 
+typedef struct Tank Tank;
+
+struct Tank
+{
+   
+    char direction;   //B vers le bas, H vers le haut, G vers la gauche , Droite vers la droite
+    int posX;
+    int posY;
+
+    int armor; // 0 => pas de blindage, 1 => tank blindé, 2 => tank ultra blindé
+
+    //int blindage_orig;
+    
+    char **bodyWork; //Servira pour l'affichage du tank
+
+    char type; //P player, E enemy
+
+    int condition; //3 on décrémente ensuite
+    //int Mise_a_jour;
+
+    int id;
+
+    Tank *next;
+
+};
+
+typedef struct Obus Obus;
+
+struct Obus {
+
+    char caractere;
+    int posX;
+    int posY;
+    int id;
+
+    char direction;
+    int type;
+    Obus *next;
+};
+
+typedef struct TankList TankList;
+
+struct TankList{
+
+    Tank *firstTank;
+    int id;
+};
+
+typedef struct ObusList ObusList;
+
+struct ObusList{
+
+    Obus *firstObus;
+    int id;
+};
+
 
 

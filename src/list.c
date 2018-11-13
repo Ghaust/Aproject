@@ -1,10 +1,10 @@
 #include "list.h"
 
 //Cette fonction prend en paramètre le tank qui a déjà été initialisé pour pouvoir initialiser son ID
-TankList *initTankList(Tank *tank){
+TankList *initTankList(){
 
     TankList *list = malloc(sizeof(*list));
-    tank = malloc(sizeof(*tank));
+    Tank *tank = malloc(sizeof(*tank));
 
     if(list == NULL || tank == NULL)
         exit(EXIT_FAILURE);
@@ -72,10 +72,10 @@ void dispTankList(TankList *list){
     printf("NULL\n");
 }
 
-ObusList *initObusList(Obus *obus){
+ObusList *initObusList(){
 
     ObusList *list = malloc(sizeof(*list));
-    obus = malloc(sizeof(*obus));
+    Obus *obus = malloc(sizeof(*obus));
 
     if(list == NULL || obus == NULL)
         exit(EXIT_FAILURE);

@@ -1,5 +1,22 @@
-#include "matrix.h"
+#include "dispFunc.h"
 
+void loadTankInMatrix(char **mat, Tank *tank){
+    int i, j;
+    int k = 0, l = 0;
+
+    for(i=tank->posX; i<tank->posX+nbLineTank; i++){
+        l=0;
+        for(j=tank->posY; j<tank->posY+nbColTank; j++){
+            mat[i][j] = tank->bodyWork[k][l];
+
+            
+            l++;
+        }
+        k++;
+    }
+    
+
+}
 
 //on initialise le tank et on charge le fichier de départ en fonction du type et de la direction du tank;
 Tank *initTankPlayer(Tank *tank){
@@ -352,8 +369,8 @@ void moveTankPlayer(Tank *tankJ,
 char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
-char **map, int c){
-    Obus *o = NULL;
+char **map, int c, ObusList *obusList){
+   
     switch(c) {
                         case UP:
                             tankJ->direction = 'H';
@@ -404,8 +421,8 @@ char **map, int c){
                                  break;
                         
                         case BANG:
-                                o = generateObus(tankJ, map);
-                                moveObus(o, map);
+                                generateObus(tankJ, map, obusList);
+                                moveObus(obusList, map);
                                 break;
                     } 
 }
@@ -419,9 +436,8 @@ Obus *initObus(Obus *o){
     return o;
 }
 
-//ObusList *obusList
-Obus *generateObus(Tank *t, char **map){
-    Obus *o;
+void generateObus(Tank *t, char **map, ObusList *obusList){
+    Obus *o = NULL;
     o = initObus(o);
     switch(t->direction){
         case 'H':
@@ -465,78 +481,81 @@ Obus *generateObus(Tank *t, char **map){
     }
 
     //Permet de stocker les infos sur les obus dans la liste
-    //insertNewObus(obusList, o);
-    return o;
+    insertNewObus(obusList, o);
+   
 }
 
-void moveObus(Obus *o, char **map){
+void moveObus(ObusList *obusList, char **map){
     int posX = 0, posY = 0;
 
-    switch(o->direction){
-        case 'H':
-            posX = o->posX--;
-            posY = o->posY;
+    while(obusList != NULL){
+        switch(obusList->firstObus->direction){
 
-            if(map[posX][posY] != ' '){
-                map[posX][posY] = ' ';
+            case 'H':
+                posX = obusList->firstObus->posX--;
+                posY = obusList->firstObus->posY;
+
+                if(map[posX][posY] != ' '){
+                    map[posX][posY] = ' ';
+                    map[posX+1][posY]= ' ';
+                    break;
+                }
                 map[posX+1][posY]= ' ';
-                break;
-            }
-            map[posX+1][posY]= ' ';
-            printf(" ");
+                printf(" ");
 
-            map[posX][posY] = o->caractere;
-            printf("✴");
-            
-        case 'B':
-            posX = o->posX++;
-            posY = o->posY;
+                map[posX][posY] = obusList->firstObus->caractere;
+                printf("✴");
+                
+            case 'B':
+                posX = obusList->firstObus->posX++;
+                posY = obusList->firstObus->posY;
 
-            if(map[posX][posY] != ' '){
-                map[posX][posY] = ' ';
-                break;
-            }
-            map[posX-1][posY]= ' ';
-            printf("%c", map[posX-1][posY]);
-
-            map[posX][posY] = o->caractere;
-            printf("✴");
-            
-            break;
-
-        case 'G':
-            posX = o->posX;
-            posY = o->posY-1;
-        
-            if(map[posX][posY] != ' '){
+                if(map[posX][posY] != ' '){
                     map[posX][posY] = ' ';
                     break;
                 }
-            map[posX][posY-1]= ' ';
-            printf("%c", map[posX][posY-1]);
+                map[posX-1][posY]= ' ';
+                printf("%c", map[posX-1][posY]);
 
-            map[posX][posY] = o->caractere;
-            printf("✴");
+                map[posX][posY] = obusList->firstObus->caractere;
+                printf("✴");
+                
+                break;
+
+            case 'G':
+                posX = obusList->firstObus->posX;
+                posY = obusList->firstObus->posY-1;
             
-            break;
+                if(map[posX][posY] != ' '){
+                        map[posX][posY] = ' ';
+                        break;
+                    }
+                map[posX][posY-1]= ' ';
+                printf("%c", map[posX][posY-1]);
 
-        case 'D':
-            posX = o->posX;
-            posY = o->posY+1;
+                map[posX][posY] = obusList->firstObus->caractere;
+                printf("✴");
+                
+                break;
 
-            if(map[posX][posY] != ' '){
-                    map[posX][posY] = ' ';
-                    break;
-                }
+            case 'D':
+                posX = obusList->firstObus->posX;
+                posY = obusList->firstObus->posY+1;
 
-            map[posX][posY+1]= ' ';
-            //mettre le curseur à cette position?
-            printf("%c", map[posX][posY+1]);
+                if(map[posX][posY] != ' '){
+                        map[posX][posY] = ' ';
+                        break;
+                    }
 
-            map[posX][posY] = o->caractere;
-            printf("✴");
-            break;
-        
+                map[posX][posY+1]= ' ';
+                //mettre le curseur à cette position?
+                printf("%c", map[posX][posY+1]);
+
+                map[posX][posY] = obusList->firstObus->caractere;
+                printf("✴");
+                break;
+        }
+        obusList = obusList->firstObus;
     }
 }
 
