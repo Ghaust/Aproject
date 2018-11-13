@@ -5,7 +5,7 @@ EXEC = PLAY
 Lancement : $(EXEC) clean
 
 
-dispFunc.o : dispFunc.c dispFunc.h headers.h tank.h 
+dispFunc.o : dispFunc.c dispFunc.h headers.h matrix.h
 			$(CC) -c $(CFLAGS) dispFunc.c 
 
 matrix.o : matrix.c matrix.h tank.h

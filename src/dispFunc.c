@@ -1,6 +1,5 @@
 #include "dispFunc.h"
-#include "tank.h"
-
+#include "matrix.h"
 
 void dispMatrix(int nbL, int nbC, char **mat){
     int i, j;
@@ -22,7 +21,7 @@ int deployMenu(){
     system("clear");
     if(menu != NULL){
         system("play -q ../sons/intro.wav &"); // $! pour le PID
-        
+         
         do{
             toucheSaisie = key_pressed();
             dispFile(menu);
