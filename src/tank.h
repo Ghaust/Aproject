@@ -21,11 +21,6 @@ char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
 char **map, int c, ObusList *obusList);
 
-/** Fonctions liées à tout ce qui touche aux obus **/
-Obus *initObus(Obus *o);
-void generateObus(Tank *t, char **map, ObusList *obusList);
-void moveObus(ObusList *obusList, char **map);
-
 
 
 int key_pressed();

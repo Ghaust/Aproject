@@ -1,4 +1,4 @@
-#include "dispFunc.h"
+#include "obus.h"
 
 void loadTankInMatrix(char **mat, Tank *tank){
     int i, j;
@@ -20,6 +20,7 @@ void loadTankInMatrix(char **mat, Tank *tank){
 
 //on initialise le tank et on charge le fichier de départ en fonction du type et de la direction du tank;
 Tank *initTankPlayer(Tank *tank){
+   tank = malloc(1*sizeof(Tank));
    tank->bodyWork = matrixAlloc(nbLineTank, nbColTank);
     //Position de départ de notre tank
    tank->posX=38;
@@ -202,6 +203,7 @@ void deleteTank(Tank *tank, char **map){
         }
 }
 
+
 void moveTankEnemy(Tank *e,
 char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
@@ -231,7 +233,7 @@ char **map){
                              replaceMatrixWithAnother(tankB_ts, e->bodyWork);
                              e->posX++;
                              moveTank(e, map);
-                            }
+                        }
                         break;
                 case 3:
                         e->direction = 'D';
@@ -240,7 +242,7 @@ char **map){
                                  replaceMatrixWithAnother(tankD_ts, e->bodyWork);
                                  e->posY++;
                                  moveTank(e, map);
-                                }
+                        }
                         break;
                         
                 case 4:
@@ -250,14 +252,8 @@ char **map){
                                  replaceMatrixWithAnother(tankG_ts, e->bodyWork);
                                  e->posY--;
                                  moveTank(e, map);
-                                }
-                                 break;
-                /*
-                case BANG:
-                                Obus *o = generateObus(e, map, oList);
-                                moveObus(o, map);
-                                break;
-                    }*/
+                        }
+                        break;
             }
     }
             
@@ -282,7 +278,8 @@ char **map){
                              replaceMatrixWithAnother(tankB_tb, e->bodyWork);
                              e->posX++;
                              moveTank(e, map);
-                            }
+
+                        }
                         break;
                 case 3:
                         e->direction = 'D';
@@ -291,7 +288,8 @@ char **map){
                                  replaceMatrixWithAnother(tankD_tb, e->bodyWork);
                                  e->posY++;
                                  moveTank(e, map);
-                                }
+
+                        }
                         break;
                         
                 case 4:
@@ -301,14 +299,9 @@ char **map){
                                  replaceMatrixWithAnother(tankG_tb, e->bodyWork);
                                  e->posY--;
                                  moveTank(e, map);
-                                }
+                        
+                        }
                                  break;
-                /*
-                case BANG:
-                                Obus *o = generateObus(e, map, oList);
-                                moveObus(o, map);
-                                break;
-                    }*/
             }
         }
     else if(e->armor == 3){
@@ -332,7 +325,7 @@ char **map){
                              replaceMatrixWithAnother(tankB_tub, e->bodyWork);
                              e->posX++;
                              moveTank(e, map);
-                            }
+                        }
                         break;
                 case 3:
                         e->direction = 'D';
@@ -341,7 +334,7 @@ char **map){
                                  replaceMatrixWithAnother(tankD_tub, e->bodyWork);
                                  e->posY++;
                                  moveTank(e, map);
-                                }
+                        }
                         break;
                         
                 case 4:
@@ -351,25 +344,19 @@ char **map){
                                  replaceMatrixWithAnother(tankG_tub, e->bodyWork);
                                  e->posY--;
                                  moveTank(e, map);
-                                }
-                                 break;
-                /*
-                case BANG:
-                                Obus *o = generateObus(e, map, oList);
-                                moveObus(o, map);
-                                break;
-                    }*/
+                        }
+                        break;
             }
         }
 }
-
-
 
 void moveTankPlayer(Tank *tankJ,
 char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
 char **map, int c, ObusList *obusList){
+
+    
    
     switch(c) {
                         case UP:
@@ -416,150 +403,13 @@ char **map, int c, ObusList *obusList){
                                     
                                     tankJ->posY--;
                                     moveTank(tankJ, map);
-                                
                                 }
-                                 break;
-                        
+                                break;
                         case BANG:
                                 generateObus(tankJ, map, obusList);
-                                moveObus(obusList, map);
                                 break;
                     } 
 }
-
-
-Obus *initObus(Obus *o){
-    o->caractere = 'C';
-    o->posX = 0;
-    o->posY = 0;
-
-    return o;
-}
-
-void generateObus(Tank *t, char **map, ObusList *obusList){
-    Obus *o = NULL;
-    o = initObus(o);
-    switch(t->direction){
-        case 'H':
-            
-            o->direction = 'H';
-            o->posX = t->posX--;
-            o->posY = t->posY+5;
-            map[o->posX][o->posY] = o->caractere;
-            moveToPosXY(o->posX, o->posY);
-            printf("✴");
-            break;
-
-        case 'B':
-
-            o->direction = 'B';
-            o->posX = t->posX+6; 
-            o->posY = t->posY+5;
-            map[o->posX][o->posY] = o->caractere;
-            moveToPosXY(o->posX, o->posY);
-            printf("✴");
-            break;
-
-        case 'G':
-
-            o->direction = 'G';
-            o->posX += t->posX+3; 
-            o->posY = t->posY--; 
-            map[o->posX][o->posY] = o->caractere;
-            moveToPosXY(o->posX, o->posY);
-            printf("✴");
-            break;
-
-        case 'D':
-            o->direction = 'D';
-            o->posX += t->posX+3; 
-            o->posY = (t->posY+10);
-            map[o->posX][o->posY] = o->caractere;
-            moveToPosXY(o->posX, o->posY);
-            printf("✴");
-            break;
-    }
-
-    //Permet de stocker les infos sur les obus dans la liste
-    insertNewObus(obusList, o);
-   
-}
-
-void moveObus(ObusList *obusList, char **map){
-    int posX = 0, posY = 0;
-
-    while(obusList != NULL){
-        switch(obusList->firstObus->direction){
-
-            case 'H':
-                posX = obusList->firstObus->posX--;
-                posY = obusList->firstObus->posY;
-
-                if(map[posX][posY] != ' '){
-                    map[posX][posY] = ' ';
-                    map[posX+1][posY]= ' ';
-                    break;
-                }
-                map[posX+1][posY]= ' ';
-                printf(" ");
-
-                map[posX][posY] = obusList->firstObus->caractere;
-                printf("✴");
-                
-            case 'B':
-                posX = obusList->firstObus->posX++;
-                posY = obusList->firstObus->posY;
-
-                if(map[posX][posY] != ' '){
-                    map[posX][posY] = ' ';
-                    break;
-                }
-                map[posX-1][posY]= ' ';
-                printf("%c", map[posX-1][posY]);
-
-                map[posX][posY] = obusList->firstObus->caractere;
-                printf("✴");
-                
-                break;
-
-            case 'G':
-                posX = obusList->firstObus->posX;
-                posY = obusList->firstObus->posY-1;
-            
-                if(map[posX][posY] != ' '){
-                        map[posX][posY] = ' ';
-                        break;
-                    }
-                map[posX][posY-1]= ' ';
-                printf("%c", map[posX][posY-1]);
-
-                map[posX][posY] = obusList->firstObus->caractere;
-                printf("✴");
-                
-                break;
-
-            case 'D':
-                posX = obusList->firstObus->posX;
-                posY = obusList->firstObus->posY+1;
-
-                if(map[posX][posY] != ' '){
-                        map[posX][posY] = ' ';
-                        break;
-                    }
-
-                map[posX][posY+1]= ' ';
-                //mettre le curseur à cette position?
-                printf("%c", map[posX][posY+1]);
-
-                map[posX][posY] = obusList->firstObus->caractere;
-                printf("✴");
-                break;
-        }
-        obusList->firstObus = obusList->firstObus->next;
-    }
-}
-
-
 
 
 int key_pressed(){
@@ -577,3 +427,4 @@ int key_pressed(){
     if (c != EOF) {ungetc(c, stdin); result = getchar();}
     return result;
 }
+

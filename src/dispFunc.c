@@ -216,7 +216,7 @@ void playGame_easyMode(int playerChoice){
 
 
                     //Lié aux déplacements de l'utilisateur
-                   
+                    //moveObus(obusList, map);
 
                 }
         
@@ -241,6 +241,7 @@ void playGame_easyMode(int playerChoice){
     system("stty echo");
     }
     else
-        printf("Nique ta mère.");
+        //à supprimer
+        printf("Nique ta mère.\n\n\n");
 }
 
