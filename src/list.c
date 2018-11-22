@@ -80,25 +80,25 @@ ObusList *initObusList(){
     if(list == NULL || obus == NULL)
         exit(EXIT_FAILURE);
 
+    list->firstObus = obus;
     obus->next = NULL;
     obus->id = 1;
-    list->firstObus = obus;
     list->id = 1;
-
     return list;
 }
 
 void insertNewObus(ObusList *list, Obus *obus){
 
-    obus = malloc(sizeof(*obus));
-
+    //obus = malloc(sizeof(*obus));
     if(list == NULL || obus == NULL)
         exit(EXIT_FAILURE);
     list->id++;
     obus->id = list->id;
-
-    obus->next = list->firstObus;
-    list->firstObus = obus;
+    list->firstObus->next = obus;
+    //On décale le NULL à la case suivante
+    list->firstObus->next->next = NULL;
+    /*obus->next = list->firstObus;
+    list->firstObus = obus;*/
 }
 
 void deleteFirstObus(ObusList *list){

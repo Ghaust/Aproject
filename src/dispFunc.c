@@ -197,6 +197,8 @@ void playGame_easyMode(int playerChoice){
         dispMatrix(nbLineMap, nbColMap, map);
         system("stty -echo");
         system("setterm -cursor off");
+	//printf("Adresse premier obus avant while = %p\n", obusList->firstObus->next);
+	//exit(0);
         while (1){
 
                     c = key_pressed();
@@ -216,7 +218,7 @@ void playGame_easyMode(int playerChoice){
 
 
                     //Lié aux déplacements de l'utilisateur
-                    //moveObus(obusList, map);
+                    moveObus(obusList, map);
 
                 }
         
@@ -244,4 +246,3 @@ void playGame_easyMode(int playerChoice){
         //à supprimer
         printf("Nique ta mère.\n\n\n");
 }
-
