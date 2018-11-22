@@ -14,13 +14,16 @@ matrix.o : matrix.c matrix.h list.h
 list.o : list.c list.h tank.h
 			$(CC) -c $(CFLAGS) list.c
 
-tank.o : tank.c tank.h dispFunc.h
+tank.o : tank.c tank.h obus.h
 			$(CC) -c $(CFLAGS) tank.c
 
-main.o : main.c headers.h dispFunc.h tank.h 
+obus.o : obus.c obus.h dispFunc.h
+			$(CC) -c $(CFLAGS) obus.c
+
+main.o : main.c headers.h obus.h tank.h 
 		$(CC) -c $(CFLAGS) main.c 
 
-$(EXEC) : dispFunc.o matrix.o list.o tank.o main.o 
+$(EXEC) : dispFunc.o matrix.o obus.o list.o tank.o main.o 
 		 $(CC) -o $@ $^ -lm
 
 Execution : 

@@ -1,5 +1,5 @@
-#include "matrix.h"
-
+//#include "matrix.h"
+#include "obus.h"
 
 void printSwitch(char c){
     switch(c){
@@ -131,7 +131,7 @@ int deployMenu(){
 void playGame_easyMode(int playerChoice){
 
     if(playerChoice == 1){
-        //Obus *oPlayer = initObus(oPlayer); 
+        
         //régler le pb d'inclusion de fichiers
         ObusList *obusList = initObusList();
         //TankList *tankList = NULL;
@@ -141,7 +141,6 @@ void playGame_easyMode(int playerChoice){
 
 
         FILE *fmap = NULL;
-        //tankJ->bodyWork = matrixAlloc(nbLineTank, nbColTank);
         
         char **tankH_ts = matrixAlloc(nbLineTank, nbColTank), **tankB_ts = matrixAlloc(nbLineTank, nbColTank), **tankG_ts = matrixAlloc(nbLineTank, nbColTank), **tankD_ts = matrixAlloc(nbLineTank, nbColTank);
         char **tankH_tb = matrixAlloc(nbLineTank, nbColTank), **tankB_tb = matrixAlloc(nbLineTank, nbColTank), **tankG_tb = matrixAlloc(nbLineTank, nbColTank), **tankD_tb = matrixAlloc(nbLineTank, nbColTank);
@@ -177,9 +176,6 @@ void playGame_easyMode(int playerChoice){
             replaceMatrixWithAnother(tankB_tub,tankE->bodyWork);
             
         //On charge le tank dans la matrice à la position de départ
-
-        
-
     
         fmap = fopen("../models/map/map_alph.txt", "r+");
         if(fmap != NULL){
@@ -197,8 +193,7 @@ void playGame_easyMode(int playerChoice){
         dispMatrix(nbLineMap, nbColMap, map);
         system("stty -echo");
         system("setterm -cursor off");
-	//printf("Adresse premier obus avant while = %p\n", obusList->firstObus->next);
-	//exit(0);
+
         while (1){
 
                     c = key_pressed();
@@ -243,6 +238,5 @@ void playGame_easyMode(int playerChoice){
     system("stty echo");
     }
     else
-        //à supprimer
-        printf("Nique ta mère.\n\n\n");
+        printf("Allez les bleus !\n\n\n");
 }
