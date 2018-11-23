@@ -19,15 +19,17 @@ TankList *initTankList(){
 
 void insertNewTank(TankList *list, Tank *tank){
 
-    tank = malloc(sizeof(*tank));
+    //tank = malloc(sizeof(*tank));
 
     if(list == NULL || tank == NULL)
         exit(EXIT_FAILURE);
     list->id++;
     tank->id = list->id;
 
-    tank->next = list->firstTank;
-    list->firstTank = tank;
+    list->firstTank->next = tank;
+    list->firstTank->next->next = NULL;
+    //tank->next = list->firstTank;
+    //list->firstTank = tank;
 }
 
 void deleteFirstTank(TankList *list){

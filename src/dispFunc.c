@@ -134,7 +134,7 @@ void playGame_easyMode(int playerChoice){
         
         //régler le pb d'inclusion de fichiers
         ObusList *obusList = initObusList();
-        //TankList *tankList = NULL;
+        TankList *tList = initTankList();
         
         Tank *tankJ = malloc(1*sizeof(Tank));
         Tank *tankE = malloc(1*sizeof(Tank));
@@ -213,7 +213,7 @@ void playGame_easyMode(int playerChoice){
 
 
                     //Lié aux déplacements de l'utilisateur
-                    moveObus(obusList, map);
+                    moveObus(obusList, map, tankJ, tList);
 
                 }
         

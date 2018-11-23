@@ -96,8 +96,6 @@ void moveTank(Tank *tank, char **map){
 
 //fonction booléenne, retourne 1 si le tank peut avancer, 0 sinon
 
-//Changer le raisonnement isfree par rapport au terminal
-//PosX correspond à la position de l'extrémité 
 int isFree(char **map, Tank *tank){
     //On va vérifier que toute la ligne devant le tank est libre pour qu'il puisse avancer
     int res = 0; 
@@ -421,7 +419,7 @@ char **map, int c, ObusList *obusList){
                         
                         case BANG:
                                 o = generateObus(tankJ, map, obusList);
-                                moveObus(o, map);
+                                //moveObus(o, map);
                                 break;
                     } 
 }

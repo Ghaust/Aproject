@@ -12,9 +12,9 @@ Obus *initObus(Obus *o){
 
 
 ObusList *generateObus(Tank *t, char **map, ObusList *obusList){
-    Obus *o = initObus(o);
+    Obus *o = NULL;
+    o = initObus(o);
 
-    //printf("Adresse Obus dans generate Obus = %p\n", o);
     switch(t->direction){
 
         case 'H':
@@ -53,24 +53,93 @@ ObusList *generateObus(Tank *t, char **map, ObusList *obusList){
             break;
     }
     printf("✴");
-	//printf("Adresse Obus dans generate Obus = %p\n", o);
+
     //Permet de stocker les infos sur les obus dans la liste
-	//exit(0);
     insertNewObus(obusList, o);
     return(obusList);
 }
 
-void collision(Obus *o, char **map, ObusList *obusList){
-	
+void explodeTank(Tank *t){
+    int i, j;
+
+    for(i=0; i<nbLineTank; i++){
+        for(j=0; j<nbColTank; j++){
+
+            moveToPosXY(1+t->posX+i, 1+t->posX+j);
+            printf("\033[37m✴\033[00m");
+
+        }
+    }
+}
+
+void checkArmor(Tank *t, TankList *tList, char **map){
+    switch(t->armor){
+        case 1:
+            explodeTank(t);
+            deleteTank(t, map);
+            deleteFirstTank(tList);
+            break;
+        case 2:
+            t->armor--;
+            break;
+        case 3:
+            t->armor--;
+            break;
+
+    }
+}
+
+void damage_tank(Tank *t, char c, Obus *o, TankList *tList, char **map){
+
+    if(c != 'A' || c != 'R' || c != 'P' || c != 'E' || c != 'K'){
+       checkArmor(t, tList, map);
+    }
+}
+
+
+void changeBlock(char **map, Obus *o){
+    if(map[o->posX][o->posY] == 'R'){
+
+        map[o->posX][o->posY] = 'A';
+        moveToPosXY(o->posX, o->posY);
+        printf("\033[31m☎\033[00m");
+
+    }else if(map[o->posX][o->posY] == 'A'){
+
+        map[o->posX][o->posY] = ' ';
+        moveToPosXY(o->posX, o->posY);
+        printf(" ");
+
+    }
+}
+
+void checkIfPiouPiouIsAlright(char c){
+    FILE *fgameover = NULL;
+    fgameover = fopen("../models/menus/gameover.txt", "r+");
+
+    if(c == 'K'){
+        system("clear");
+        dispFile(fgameover);
+        exit(0);
+    }
+
+}
+
+void collision(Obus *o, char **map, ObusList *obusList, Tank *t, TankList *tList){
+    
 	switch(o->direction){
 	
 		case 'H':
 			if(map[o->posX--][o->posY] != ' '){
-				//if map à cette pos correspond à un truc tank damage tank pour la vie
+                damage_tank(t, map[o->posX--][o->posY], o, tList, map);
+                checkIfPiouPiouIsAlright(map[o->posX--][o->posY]);
+                changeBlock(map, o);
+				/*if map à cette pos correspond à un truc tank damage tank pour la vie
 				map[o->posX][o->posY] = ' ';
 				moveToPosXY(o->posX, o->posY);
 				printf(" ");
 				deleteFirstObus(obusList);
+                */
 				//gérer dégats
 			}else{
 				map[o->posX][o->posY] = ' ';
@@ -122,7 +191,7 @@ void collision(Obus *o, char **map, ObusList *obusList){
 }
 
 
-void moveObus(ObusList *o, char **map){
+void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
     int oldX, oldY;
     Obus *obus = o->firstObus->next;
 
@@ -140,28 +209,28 @@ void moveObus(ObusList *o, char **map){
 
                 obus->posX--;
                 moveToPosXY(obus->posX, obus->posY);
-		//exit(0);
-                collision(obus, map, o);
+		
+                collision(obus, map, o, t, tList);
                 break;
             case 'B':
 
                 obus->posX++;
                 moveToPosXY(obus->posX, obus->posY);
-		//exit(0);
-                collision(obus, map, o);
+		
+                collision(obus, map, o, t, tList);
                 break;
             case 'G':
 
                 obus->posY--;
                 moveToPosXY(obus->posX, obus->posY);
-		//exit(0);
-                collision(obus, map, o);
+		
+                collision(obus, map, o, t, tList);
                 break;
             case 'D':
 
                 obus->posY++;
                 moveToPosXY(obus->posX, obus->posY);
-                collision(obus, map, o);
+                collision(obus, map, o, t, tList);
                 break;
         }
         printf("✴");
@@ -170,3 +239,4 @@ void moveObus(ObusList *o, char **map){
     }
     
 }
+
