@@ -84,6 +84,8 @@ void insertNewObus(ObusList *list, Obus *obus){
    
 }
 
+//Coder suppression en milieu de chaine
+//Coder 
 void deleteFirstObus(ObusList *list){
     if(list == NULL)
         exit(EXIT_FAILURE);

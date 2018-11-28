@@ -137,8 +137,6 @@ void playGame_easyMode(int playerChoice){
         TankList *tList = initTankList();
         
         Tank *tankJ = malloc(1*sizeof(Tank));
-        Tank *tankE = malloc(1*sizeof(Tank));
-
 
         FILE *fmap = NULL;
         
@@ -160,28 +158,16 @@ void playGame_easyMode(int playerChoice){
 
         tankJ = initTankPlayer(tankJ);
     
-        tankE = initTankEnemy(tankE);
-
+  
         replaceMatrixWithAnother(tankD_ts,tankJ->bodyWork);
        
-        if(tankE->armor == 1 && tankE->direction=='G')
-            replaceMatrixWithAnother(tankG_ts,tankE->bodyWork);
-        else if(tankE->armor == 2 && tankE->direction=='G')
-            replaceMatrixWithAnother(tankG_tb,tankE->bodyWork);
-        else if(tankE->armor == 2 && tankE->direction=='B')
-            replaceMatrixWithAnother(tankB_tb,tankE->bodyWork);
-        else if(tankE->armor == 3 && tankE->direction=='G')
-            replaceMatrixWithAnother(tankG_tub,tankE->bodyWork);
-        else if(tankE->armor == 3 && tankE->direction=='B')
-            replaceMatrixWithAnother(tankB_tub,tankE->bodyWork);
-            
         //On charge le tank dans la matrice à la position de départ
         fmap = fopen("../models/map/map_alph.txt", "r+");
         if(fmap != NULL){
             writingMat(nbLineMap, nbColMap, map, fmap);
            
             loadTankInMatrix(map, tankJ);
-            loadTankInMatrix(map, tankE);
+            
             fclose(fmap);
 
         }
@@ -203,8 +189,10 @@ void playGame_easyMode(int playerChoice){
                     tankH_tub, tankB_tub, tankG_tub, tankD_tub,
                     map, c, obusList);
 
-                    /*
-                    moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
+                    /*generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 
+                    tankG_tub, map, tList, 1);*/
+
+                    /*moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
                     tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                     tankH_tub, tankB_tub, tankG_tub, tankD_tub,
                     map, tList);*/
@@ -218,7 +206,6 @@ void playGame_easyMode(int playerChoice){
 
 		freeMat(nbLineMap, map);
         freeMat(nbLineTank, tankJ->bodyWork);
-        freeMat(nbLineTank, tankE->bodyWork);
         freeMat(nbLineTank,tankH_ts);
         freeMat(nbLineTank,tankB_ts);
         freeMat(nbLineTank,tankD_ts);
