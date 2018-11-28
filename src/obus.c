@@ -90,28 +90,32 @@ void checkArmor(Tank *t, TankList *tList, char **map){
     }
 }
 
-void damage_tank(Tank *t, char c, Obus *o, TankList *tList, char **map){
+int damage_tank(Tank *t, char c, Obus *o, TankList *tList, char **map){
 
     if(c != 'A' || c != 'R' || c != 'P' || c != 'E' || c != 'K'){
        checkArmor(t, tList, map);
+       return 1;
     }
+    return 0;
 }
 
 
-void changeBlock(char **map, int posX, int posY){
+int changeBlock(char **map, int posX, int posY){
     if(map[posX][posY] == 'R'){
 
         map[posX][posY] = 'A';
         moveToPosXY(posX, posY);
         printf("\033[31m☎\033[00m");
-        
+        return 1;
     }else if(map[posX][posY] == 'A'){
 
         map[posX][posY] = ' ';
         moveToPosXY(posX, posY);
         printf(" ");
 
+        return 1;
     }
+    return 0;
 }
 
 void checkIfPiouPiouIsAlright(char c){
@@ -130,9 +134,7 @@ void checkIfPiouPiouIsAlright(char c){
 }
 
 void collision(Obus *o, char **map, ObusList *obusList, Tank *t, TankList *tList){
-
-    int posX=o->posX, posY = o->posY;
-
+    int posX = o->posX, posY = o->posY;
 	switch(o->direction){
         
         case 'H':
@@ -149,12 +151,14 @@ void collision(Obus *o, char **map, ObusList *obusList, Tank *t, TankList *tList
                 
             }
             else{
-                system("clear");
-                printf("%c\n\n", map[posX][posY]);
-                //damage_tank(t, map[posX-1][posY], o, tList, map);
-                //checkIfPiouPiouIsAlright(map[posX-1][posY]);
-                //changeBlock(map, posX, posY);
-                exit(0);
+                //system("clear");
+                //printf("%c\n\n", map[posX][posY]);
+                /*damage_tank(t, map[posX-1][posY], o, tList, map) ||*/ 
+                if(changeBlock(map, o->posX, o->posY))
+                    deleteFirstObus(obusList->firstObus);
+                checkIfPiouPiouIsAlright(map[o->posX][o->posY]);
+                //;
+                //exit(0);
             }
             break;
         case 'B':
@@ -235,33 +239,30 @@ void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
 
 	
     while(obus != NULL){
-       if(obus->timer>5000){
+       if(obus->timer>500){
             oldX = obus->posX;
             oldY = obus->posY;
 
             switch(obus->direction){
                 case 'H':
+
                     collision(obus, map, o, t, tList);
                     break;
                 case 'B':
-                    
-                    collision(obus, map, o, t, tList);
-             
-                    
+            
+                    collision(obus, map, o, t, tList); 
                     break;
+
                 case 'G':
 
                     collision(obus, map, o, t, tList);
-                   
-                    
-
                     break;
+
                 case 'D':
-                    collision(obus, map, o, t, tList);
-                   
-                    
 
+                    collision(obus, map, o, t, tList);
                     break;
+                    
             }
             
             obus->timer = 0;
