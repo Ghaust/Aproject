@@ -208,3 +208,97 @@ void testMatrix(char **mat, int nbL, int nbC){
         }
     }
 }
+
+
+void deleteTankById(TankList *list, int id){
+    if(list == NULL)
+        exit(EXIT_FAILURE);
+    Tank *first = list->firstTank;
+    Tank *toDelete;
+    while(first != NULL){
+        if(first->id == id){
+            toDelete = first;
+            list->firstTank = list->firstTank->next;
+            free(toDelete);
+            break;
+        }
+        first = first->next;
+    }
+}
+
+void deleteObusById(ObusList *list, int id){
+    if(list == NULL)
+        exit(EXIT_FAILURE);
+    Obus *first = list->firstObus;
+    Obus *toDelete;
+    while(first != NULL){
+        if(first->id == id){
+            toDelete = first;
+            list->firstObus = list->firstObus->next;
+            free(toDelete);
+            break;
+        }
+        first = first->next;
+    }
+}
+
+	case 'H':
+			if(map[posX-1][posY] != ' '){
+                //damage_tank(t, map[o->posX--][o->posY], o, tList, map);
+                //checkIfPiouPiouIsAlright(map[o->posX--][o->posY]);
+                changeBlock(map, o);
+				/*if map à cette pos correspond à un truc tank damage tank pour la vie
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(o->posX, o->posY);
+				printf(" ");
+                */
+				//gérer dégats
+                deleteFirstObus(obusList);
+                
+			}else{
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(posX-1, o->posY);
+				printf(" ");
+			}
+			break;
+		case 'B':
+			if(map[o->posX++][o->posY] != ' '){
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(o->posX, o->posY);
+				printf(" ");
+				deleteFirstObus(obusList);
+				//gérer dégats
+			}else{
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(o->posX, o->posY);
+				printf(" ");
+			}
+			break;
+	
+        case 'G':
+			if(map[posX][posY-1] != ' '){
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(o->posX, o->posY);
+				printf(" ");
+				deleteFirstObus(obusList);
+				//gérer dégats
+			}else{
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(o->posX, o->posY);
+					printf(" ");
+			}
+			break;
+		case 'D':
+			if(map[o->posX][o->posY++] != ' '){
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(o->posX, o->posY);
+				printf(" ");
+				deleteFirstObus(obusList);	
+				//gérer dégats
+			}else{
+				map[o->posX][o->posY] = ' ';
+				moveToPosXY(o->posX, o->posY);
+				printf(" ");
+			}
+			break;
+		

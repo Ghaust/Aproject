@@ -90,7 +90,7 @@ int deployMenu(){
 
     system("clear");
     if(menu != NULL){
-        system("play -q ../sons/intro.wav &"); // $! pour le PID
+        //system("play -q ../sons/intro.wav &"); // $! pour le PID
          
         do{
             toucheSaisie = key_pressed();
@@ -159,7 +159,7 @@ void playGame_easyMode(int playerChoice){
         int c;
 
         tankJ = initTankPlayer(tankJ);
-        //TankList *t = initTankList(tankJ);
+    
         tankE = initTankEnemy(tankE);
 
         replaceMatrixWithAnother(tankD_ts,tankJ->bodyWork);
@@ -176,7 +176,6 @@ void playGame_easyMode(int playerChoice){
             replaceMatrixWithAnother(tankB_tub,tankE->bodyWork);
             
         //On charge le tank dans la matrice à la position de départ
-    
         fmap = fopen("../models/map/map_alph.txt", "r+");
         if(fmap != NULL){
             writingMat(nbLineMap, nbColMap, map, fmap);
@@ -192,7 +191,7 @@ void playGame_easyMode(int playerChoice){
         system("clear");
         dispMatrix(nbLineMap, nbColMap, map);
         system("stty -echo");
-        system("setterm -cursor off");
+        //system("setterm -cursor off");
 
         while (1){
 
@@ -205,11 +204,10 @@ void playGame_easyMode(int playerChoice){
                     map, c, obusList);
 
                     /*
-                    moveTankEnemy(tankE,
-                    tankH_ts, tankB_ts, tankG_ts, tankD_ts,
+                    moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
                     tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                     tankH_tub, tankB_tub, tankG_tub, tankD_tub,
-                    map);*/
+                    map, tList);*/
 
 
                     //Lié aux déplacements de l'utilisateur
@@ -235,7 +233,7 @@ void playGame_easyMode(int playerChoice){
         freeMat(nbLineTank,tankG_tub);
 
 
-    system("stty echo");
+    //system("stty echo");
     }
     else
         printf("Allez les bleus !\n\n\n");

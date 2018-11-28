@@ -6,6 +6,7 @@ Obus *initObus(Obus *o){
     o->caractere = 'C';
     o->posX = 0;
     o->posY = 0;
+    o->timer = 0;
 
     return o;
 }
@@ -97,17 +98,17 @@ void damage_tank(Tank *t, char c, Obus *o, TankList *tList, char **map){
 }
 
 
-void changeBlock(char **map, Obus *o){
-    if(map[o->posX][o->posY] == 'R'){
+void changeBlock(char **map, int posX, int posY){
+    if(map[posX][posY] == 'R'){
 
-        map[o->posX][o->posY] = 'A';
-        moveToPosXY(o->posX, o->posY);
+        map[posX][posY] = 'A';
+        moveToPosXY(posX, posY);
         printf("\033[31m☎\033[00m");
+        
+    }else if(map[posX][posY] == 'A'){
 
-    }else if(map[o->posX][o->posY] == 'A'){
-
-        map[o->posX][o->posY] = ' ';
-        moveToPosXY(o->posX, o->posY);
+        map[posX][posY] = ' ';
+        moveToPosXY(posX, posY);
         printf(" ");
 
     }
@@ -117,124 +118,155 @@ void checkIfPiouPiouIsAlright(char c){
     FILE *fgameover = NULL;
     fgameover = fopen("../models/menus/gameover.txt", "r+");
 
-    if(c == 'K'){
-        system("clear");
-        dispFile(fgameover);
-        exit(0);
-    }
+    if(fgameover != NULL){
+        if(c == 'K'){
+            system("clear");
+            dispFile(fgameover);
 
+            fclose(fgameover);
+            exit(0);
+        }
+    }
 }
 
 void collision(Obus *o, char **map, ObusList *obusList, Tank *t, TankList *tList){
-    
+
+    int posX=o->posX, posY = o->posY;
+
 	switch(o->direction){
-	
-		case 'H':
-			if(map[o->posX--][o->posY] != ' '){
-                damage_tank(t, map[o->posX--][o->posY], o, tList, map);
-                checkIfPiouPiouIsAlright(map[o->posX--][o->posY]);
-                changeBlock(map, o);
-				/*if map à cette pos correspond à un truc tank damage tank pour la vie
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-				printf(" ");
-				deleteFirstObus(obusList);
-                */
-				//gérer dégats
-			}else{
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-				printf(" ");
-			}
-			break;
-		case 'B':
-			if(map[o->posX++][o->posY] != ' '){
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-				printf(" ");
-				deleteFirstObus(obusList);
-				//gérer dégats
-			}else{
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-					printf(" ");
-			}
-			break;
-		case 'G':
-			if(map[o->posX][o->posY--] != ' '){
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-				printf(" ");
-				deleteFirstObus(obusList);
-				//gérer dégats
-			}else{
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-					printf(" ");
-			}
-			break;
-		case 'D':
-			if(map[o->posX][o->posY++] != ' '){
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-				printf(" ");
-				deleteFirstObus(obusList);	
-				//gérer dégats
-			}else{
-				map[o->posX][o->posY] = ' ';
-				moveToPosXY(o->posX, o->posY);
-				printf(" ");
-			}
-			break;
-		
-	}	
+        
+        case 'H':
+             if(map[o->posX-1][o->posY] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY] = ' ';
+                printf(" ");
+                
+                o->posX--;
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY]=o->caractere;
+                printf("✴");
+
+                
+            }
+            else{
+                system("clear");
+                printf("%c\n\n", map[posX][posY]);
+                //damage_tank(t, map[posX-1][posY], o, tList, map);
+                //checkIfPiouPiouIsAlright(map[posX-1][posY]);
+                //changeBlock(map, posX, posY);
+                exit(0);
+            }
+            break;
+        case 'B':
+             if(map[o->posX+1][o->posY] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY] = ' ';
+                printf(" ");
+                
+                o->posX++;
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY]=o->caractere;
+                printf("✴");
+
+                
+            }
+            else{
+                system("clear");
+                printf("%c\n\n", map[posX][posY]);
+                //damage_tank(t, map[posX-1][posY], o, tList, map);
+                //checkIfPiouPiouIsAlright(map[posX-1][posY]);
+                //changeBlock(map, posX, posY);
+                exit(0);
+            }
+            break;
+        case 'G':
+             if(map[o->posX][o->posY-1] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY] = ' ';
+                printf(" ");
+                
+                o->posY--;
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY]=o->caractere;
+                printf("✴");
+
+                
+            }
+            else{
+                system("clear");
+                printf("%c\n\n", map[posX][posY]);
+                //damage_tank(t, map[posX-1][posY], o, tList, map);
+                //checkIfPiouPiouIsAlright(map[posX-1][posY]);
+                //changeBlock(map, posX, posY);
+                exit(0);
+            }
+            break;
+        case 'D':
+            if(map[o->posX][o->posY+1] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY] = ' ';
+                printf(" ");
+                
+                o->posY++;
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY]=o->caractere;
+                printf("✴");
+
+                
+            }
+            else{
+                system("clear");
+                printf("%c\n\n", map[posX][posY]);
+                //damage_tank(t, map[posX-1][posY], o, tList, map);
+                //checkIfPiouPiouIsAlright(map[posX-1][posY]);
+                //changeBlock(map, posX, posY);
+                exit(0);
+            }
+            break;
+	}
 }
 
 
 void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
     int oldX, oldY;
     Obus *obus = o->firstObus->next;
-
     if(o == NULL)
         exit(EXIT_FAILURE);
 
 	
     while(obus != NULL){
-        //if(obus->timer>6)
-        oldX = obus->posX;
-        oldY = obus->posY;
+       if(obus->timer>5000){
+            oldX = obus->posX;
+            oldY = obus->posY;
 
-        switch(obus->direction){
-            case 'H':
+            switch(obus->direction){
+                case 'H':
+                    collision(obus, map, o, t, tList);
+                    break;
+                case 'B':
+                    
+                    collision(obus, map, o, t, tList);
+             
+                    
+                    break;
+                case 'G':
 
-                obus->posX--;
-                moveToPosXY(obus->posX, obus->posY);
-		
-                collision(obus, map, o, t, tList);
-                break;
-            case 'B':
+                    collision(obus, map, o, t, tList);
+                   
+                    
 
-                obus->posX++;
-                moveToPosXY(obus->posX, obus->posY);
-		
-                collision(obus, map, o, t, tList);
-                break;
-            case 'G':
+                    break;
+                case 'D':
+                    collision(obus, map, o, t, tList);
+                   
+                    
 
-                obus->posY--;
-                moveToPosXY(obus->posX, obus->posY);
-		
-                collision(obus, map, o, t, tList);
-                break;
-            case 'D':
-
-                obus->posY++;
-                moveToPosXY(obus->posX, obus->posY);
-                collision(obus, map, o, t, tList);
-                break;
-        }
-        printf("✴");
-
+                    break;
+            }
+            
+            obus->timer = 0;
+        }else
+            obus->timer++;
         obus = obus->next;
     }
     

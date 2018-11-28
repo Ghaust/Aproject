@@ -31,7 +31,7 @@ struct Tank
     char **bodyWork; //Servira pour l'affichage du tank
 
     char type; //P player, E enemy
-
+    int timer;
     int condition; //3 on décrémente ensuite
     //int Mise_a_jour;
 
@@ -52,6 +52,8 @@ struct Obus {
 
     char direction;
     int type;
+    int timer;
+    
     Obus *next;
 };
 

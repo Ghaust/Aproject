@@ -7,6 +7,6 @@ void collision(Obus *o, char **map, ObusList *obusList, Tank *t, TankList *tList
 void moveObus(ObusList *obusList, char **map, Tank *t, TankList *tList);
 void damage_tank(Tank *t, char c, Obus *o, TankList *tList, char **map);
 void explodeTank(Tank *t);
-void changeBlock(char **map, Obus *o);
+void changeBlock(char **map, int posX, int posY);
 void checkIfPiouPiouIsAlright(char c);
 void checkArmor(Tank *t, TankList *tList, char **map);

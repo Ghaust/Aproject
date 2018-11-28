@@ -9,17 +9,15 @@ TankList *initTankList(){
     if(list == NULL || tank == NULL)
         exit(EXIT_FAILURE);
 
+    list->firstTank = tank;
     tank->next = NULL;
     tank->id = 1;
-    list->firstTank = tank;
     list->id = 1;
 
     return list;
 }
 
 void insertNewTank(TankList *list, Tank *tank){
-
-    //tank = malloc(sizeof(*tank));
 
     if(list == NULL || tank == NULL)
         exit(EXIT_FAILURE);
@@ -28,8 +26,7 @@ void insertNewTank(TankList *list, Tank *tank){
 
     list->firstTank->next = tank;
     list->firstTank->next->next = NULL;
-    //tank->next = list->firstTank;
-    //list->firstTank = tank;
+    
 }
 
 void deleteFirstTank(TankList *list){
@@ -45,21 +42,6 @@ void deleteFirstTank(TankList *list){
 }
 
 
-void deleteTankById(TankList *list, int id){
-    if(list == NULL)
-        exit(EXIT_FAILURE);
-    Tank *first = list->firstTank;
-    Tank *toDelete;
-    while(first != NULL){
-        if(first->id == id){
-            toDelete = first;
-            list->firstTank = list->firstTank->next;
-            free(toDelete);
-            break;
-        }
-        first = first->next;
-    }
-}
 
 void dispTankList(TankList *list){
     if(list == NULL)
@@ -91,16 +73,15 @@ ObusList *initObusList(){
 
 void insertNewObus(ObusList *list, Obus *obus){
 
-    //obus = malloc(sizeof(*obus));
     if(list == NULL || obus == NULL)
         exit(EXIT_FAILURE);
+        
     list->id++;
     obus->id = list->id;
+
     list->firstObus->next = obus;
-    //On décale le NULL à la case suivante
     list->firstObus->next->next = NULL;
-    /*obus->next = list->firstObus;
-    list->firstObus = obus;*/
+   
 }
 
 void deleteFirstObus(ObusList *list){
@@ -115,22 +96,6 @@ void deleteFirstObus(ObusList *list){
     }
 }
 
-
-void deleteObusById(ObusList *list, int id){
-    if(list == NULL)
-        exit(EXIT_FAILURE);
-    Obus *first = list->firstObus;
-    Obus *toDelete;
-    while(first != NULL){
-        if(first->id == id){
-            toDelete = first;
-            list->firstObus = list->firstObus->next;
-            free(toDelete);
-            break;
-        }
-        first = first->next;
-    }
-}
 
 void dispObusList(ObusList *list){
     if(list == NULL)
