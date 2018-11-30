@@ -90,7 +90,7 @@ int deployMenu(){
 
     system("clear");
     if(menu != NULL){
-        system("play -q ../sons/intro.wav &"); // $! pour le PID
+        //system("play -q ../sons/intro.wav &"); // $! pour le PID
          
         do{
             toucheSaisie = key_pressed();
@@ -185,7 +185,7 @@ void playGame_easyMode(int playerChoice){
                     tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                     tankH_tub, tankB_tub, tankG_tub, tankD_tub,
                     map, c, obusList);
-
+                    
                     if(timer_enemy == 5000){
                         //printf("Dans la condition, Adresse Tank Joueur = %p\n", tList->firstTank);
                         generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 

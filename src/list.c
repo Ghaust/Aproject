@@ -45,7 +45,7 @@ void deleteFirstTank(TankList *list){
     }
 }
 
-void deleteFirstTankById(TankList *list, int id, char **map){
+void deleteTankById(TankList *list, int id, char **map){
   if(list == NULL)
      exit(EXIT_FAILURE);
   
@@ -107,18 +107,16 @@ void insertNewObus(ObusList *list, Obus *obus){
     list->id++;
     obus->id = list->id;
 
-    /*while(list->firstObus->next != NULL){
+    while(list->firstObus->next != NULL){
         list->firstObus = list->firstObus->next;
-        list->firstObus->next = NULL;
-    }*/
-    
+    }
     list->firstObus->next = obus;
-    list->firstObus->next->next = NULL;
+    
+    //list->firstObus->next = obus;
+    //list->firstObus->next->next = NULL;
    
 }
 
-//Coder suppression en milieu de chaine
-//Coder 
 void deleteFirstObus(ObusList *list){
     if(list == NULL)
         exit(EXIT_FAILURE);
@@ -129,6 +127,30 @@ void deleteFirstObus(ObusList *list){
         free(toDelete);
 
     }
+}
+
+
+void deleteObusById(ObusList *list, int id, char **map){
+  if(list == NULL)
+     exit(EXIT_FAILURE);
+  
+  if(list->firstObus->id == id) {
+    list->firstObus = list->firstObus->next;
+    return;
+  }
+
+  Obus *next;
+  Obus *actualO = list->firstObus;
+
+  while(actualO != NULL) {
+    if(actualO->next->id == id) {
+      next = actualO->next->next;
+      free(actualO->next);
+      actualO->next = next;
+      return;
+    }
+    actualO = actualO->next;
+  }
 }
 
 
