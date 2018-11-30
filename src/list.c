@@ -1,10 +1,9 @@
 #include "list.h"
 
 //Cette fonction prend en paramètre le tank qui a déjà été initialisé pour pouvoir initialiser son ID
-TankList *initTankList(){
+TankList *initTankList(Tank *tank){
 
     TankList *list = malloc(sizeof(*list));
-    Tank *tank = malloc(sizeof(*tank));
 
     if(list == NULL || tank == NULL)
         exit(EXIT_FAILURE);
@@ -24,14 +23,19 @@ void insertNewTank(TankList *list, Tank *tank){
     list->id++;
     tank->id = list->id;
 
+    
+    while(list->firstTank->next != NULL){
+        list->firstTank = list->firstTank->next;
+    }
     list->firstTank->next = tank;
-    list->firstTank->next->next = NULL;
+    
     
 }
 
 void deleteFirstTank(TankList *list){
     if(list == NULL)
         exit(EXIT_FAILURE);
+
     if(list->firstTank != NULL){
 
         Tank *toDelete = list->firstTank;
@@ -41,6 +45,30 @@ void deleteFirstTank(TankList *list){
     }
 }
 
+void deleteFirstTankById(TankList *list, int id, char **map){
+  if(list == NULL)
+     exit(EXIT_FAILURE);
+  
+  if(list->firstTank->id == id) {
+    Tank *toDelete = list->firstTank;
+    deleteTank(toDelete, map);
+    list->firstTank = list->firstTank->next;
+    return;
+  }
+
+  Tank *next;
+  Tank *actualT = list->firstTank;
+  while(actualT != NULL) {
+    if(actualT->next->id == id) {
+      next = actualT->next->next;
+      deleteTank(actualT->next, map);
+      free(actualT->next);
+      actualT->next = next;
+      return;
+    }
+    actualT = actualT->next;
+  }
+}
 
 
 void dispTankList(TankList *list){
@@ -79,6 +107,11 @@ void insertNewObus(ObusList *list, Obus *obus){
     list->id++;
     obus->id = list->id;
 
+    /*while(list->firstObus->next != NULL){
+        list->firstObus = list->firstObus->next;
+        list->firstObus->next = NULL;
+    }*/
+    
     list->firstObus->next = obus;
     list->firstObus->next->next = NULL;
    

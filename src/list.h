@@ -7,6 +7,7 @@ TankList *initTankList();
 void insertNewTank(TankList *list, Tank *tank);
 void deleteFirstTank(TankList *list);
 void dispTankList(TankList *list);
+void deleteFirstTankById(TankList *list, int id, char **map);
 
 /** Fonctions liées à la liste des obus **/
 ObusList *initObusList();

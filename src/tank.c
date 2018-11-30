@@ -18,7 +18,9 @@ void loadTankInMatrix(char **mat, Tank *tank){
 
 }
 
-Tank *initTankEnemy(Tank *tank){
+
+Tank *initTankEnemy(){
+   Tank *tank = malloc(sizeof(Tank));
    int randArmorMax = 0, randArmorMin = 0;
 
    randArmorMax = rand()%50-1;
@@ -41,101 +43,115 @@ Tank *initTankEnemy(Tank *tank){
    return tank;
 }
 
+int checkIfSpawnIsFree(char **map, int posX, int posY){
+    int i, j;
+    int isFree = 1;
+
+    for(i=posX; i<posX+nbLineTank; i++){
+        for(j=posY; j<posY+nbColTank; j++){
+            if(map[i][j] != ' ')
+                isFree=0;
+        }
+    }
+    return isFree;
+}
+
 void generateTankEnemy(char **tankB_ts, char **tankB_tb, char **tankB_tub,
 char **tankG_ts, char **tankG_tb, char **tankG_ub, 
-char **map, TankList *tankList, int modeJeu){
+char **map, TankList *tankList){
     
     //Deux positions d'apparition de tanks sur la map, en haut et en bas
     int posX_droite = 2, posY_droite = 94, posX_haut = 16, posY_haut = 175, randPos;
-    int nbTanks = 0;
+    int nbTanks= 10;
 
-    if(modeJeu == 1){
-        nbTanks = 10;
-        do{
-            Tank *tank = initTankEnemy(tank);
-            randPos = rand()%2-1;
-            if(randPos == 1){
-                tank->direction = 'G';
+    Tank *tank = initTankEnemy();
+
+    randPos = rand()%2-1;
+
+    if(randPos == 1){
                 tank->posX = posX_droite;
                 tank->posY = posY_droite;
+                tank->direction = 'G';
+                
                 switch(tank->armor){
                         case 1:
                             replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
+                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                return;
+                            else{
+                                loadTankInMatrix(map,tank);
+                                moveTank(tank, map);
+                            }
                             break;
                         case 2:
                             replaceMatrixWithAnother(tankB_tb,tank->bodyWork);
+
+                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                return;
+                            else{
+                                loadTankInMatrix(map,tank);
+                                moveTank(tank, map);
+                            }
                             break;
                         case 3:
                             replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
+                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                return;
+                            else{
+                                loadTankInMatrix(map,tank);
+                                moveTank(tank, map);
+                            }
                             break;
                 }
             }else{
-                tank->direction = 'B';
                 tank->posX = posX_haut;
                 tank->posY = posY_haut;
+                tank->direction = 'B';
                 switch(tank->armor){
                         case 1:
                             replaceMatrixWithAnother(tankG_ts,tank->bodyWork);
+                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                return;
+                           else{
+                                loadTankInMatrix(map,tank);
+                                moveTank(tank, map);
+                            }
                             break;
                         case 2:
                             replaceMatrixWithAnother(tankG_tb,tank->bodyWork);
+                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                return;
+                            else{
+                                loadTankInMatrix(map,tank);
+                                moveTank(tank, map);
+                            }
                             break;
                         case 3:
                             replaceMatrixWithAnother(tankG_ts,tank->bodyWork);
+                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                return;
+                            else{
+                                loadTankInMatrix(map,tank);
+                                moveTank(tank, map);
+                            }
                             break;
                 }
             }
             insertNewTank(tankList, tank);
             nbTanks--;
+    /*do{
+            
 
-        }while(nbTanks != 0);
-    }else if(modeJeu == 2){
-        nbTanks = 15;
+        
+        //exit(0);
+        }while(nbTanks != 0);*/
 
-        do{
-            Tank *tank = initTankEnemy(tank);
-            randPos = rand()%2-1;
-            if(randPos == 1){
-                switch(tank->armor){
-                        case 1:
-                            replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
-                            break;
-                        case 2:
-                            replaceMatrixWithAnother(tankB_tb,tank->bodyWork);
-                            break;
-                        case 3:
-                            replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
-                            break;
-                }
-                tank->direction = 'G';
-                tank->posX = posX_droite;
-                tank->posY = posY_droite;
-            }else{
-                tank->direction = 'B';
-                tank->posX = posX_haut;
-                tank->posY = posY_haut;
-                switch(tank->armor){
-                        case 1:
-                            replaceMatrixWithAnother(tankG_ts,tank->bodyWork);
-                            break;
-                        case 2:
-                            replaceMatrixWithAnother(tankG_tb,tank->bodyWork);
-                            break;
-                        case 3:
-                            replaceMatrixWithAnother(tankG_ts,tank->bodyWork);
-                            break;
-                }
-            }
-            insertNewTank(tankList, tank);
-            nbTanks--;
 
-        }while(nbTanks != 0);
-
-    }
 }
 
 //on initialise le tank et on charge le fichier de départ en fonction du type et de la direction du tank;
-Tank *initTankPlayer(Tank *tank){
+Tank *initTankPlayer(){
+    Tank *tank = malloc(sizeof(Tank));
    tank->bodyWork = matrixAlloc(nbLineTank, nbColTank);
     //Position de départ de notre tank
    tank->posX=38;
@@ -210,10 +226,7 @@ int isFree(char **map, Tank *tank){
                 }
                 //On vérifie que toute la ligne (de taille largeurTank)
                 if(res == nbColTank)
-                    {
-                        return 1;
-                    }
-                   
+                        return 1; 
                 else
                     return 0;
                 break;
@@ -228,13 +241,9 @@ int isFree(char **map, Tank *tank){
                         res++;
                 }
                 if(res == nbLineTank)
-                {
                     return 1;
-                }
                 else  
-                {
                     return 0;
-                }
                 break;
             }
         case 'D':
@@ -246,13 +255,9 @@ int isFree(char **map, Tank *tank){
                         res++;
                 }
                  if(res == nbLineTank)
-                {
                     return 1;
-                }
                 else  
-                {
                     return 0;
-                }
                 break;
             }
     }
@@ -278,6 +283,7 @@ void deleteTank(Tank *tank, char **map){
         }
 }
 
+
 void moveTankEnemy(char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
@@ -286,9 +292,11 @@ char **map, TankList *tankList){
     Tank *eTank = tankList->firstTank;
     int randPos = 0;
 
+    eTank = eTank->next;
+
     while(eTank != NULL){
         if(eTank->timer>5000000){
-            randPos = rand()%2-1;
+            randPos = rand()%4-1;
             if(eTank->armor == 1){
                 switch(randPos){
                     case 1:
@@ -345,6 +353,7 @@ char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
 char **map, int c, ObusList *obusList){
+
    ObusList *o = NULL;
     switch(c) {
                         case UP:
@@ -372,9 +381,10 @@ char **map, int c, ObusList *obusList){
                                 
                                 tankJ->direction = 'D';
                                 if((isFree(map, tankJ))){
-
                                     deleteTank(tankJ, map);
+                                    //printf("adresse Tank Joueur dans move tank player = %p\n", tankJ);
                                     replaceMatrixWithAnother(tankD_ts, tankJ->bodyWork);
+                                    //exit(0);
                                     tankJ->posY++;
                                     moveTank(tankJ, map);
                                 }

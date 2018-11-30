@@ -239,7 +239,7 @@ void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
 
 	
     while(obus != NULL){
-       if(obus->timer>500){
+       if(obus->timer>1000){
             oldX = obus->posX;
             oldY = obus->posY;
 

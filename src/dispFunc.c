@@ -90,7 +90,7 @@ int deployMenu(){
 
     system("clear");
     if(menu != NULL){
-        //system("play -q ../sons/intro.wav &"); // $! pour le PID
+        system("play -q ../sons/intro.wav &"); // $! pour le PID
          
         do{
             toucheSaisie = key_pressed();
@@ -134,10 +134,11 @@ void playGame_easyMode(int playerChoice){
         
         //régler le pb d'inclusion de fichiers
         ObusList *obusList = initObusList();
-        TankList *tList = initTankList();
+        Tank *tankJ = initTankPlayer(); 
+        TankList *tList = initTankList(tankJ);
         
-        Tank *tankJ = malloc(1*sizeof(Tank));
-
+        
+        int timer_enemy = 0;
         FILE *fmap = NULL;
         
         char **tankH_ts = matrixAlloc(nbLineTank, nbColTank), **tankB_ts = matrixAlloc(nbLineTank, nbColTank), **tankG_ts = matrixAlloc(nbLineTank, nbColTank), **tankD_ts = matrixAlloc(nbLineTank, nbColTank);
@@ -151,15 +152,12 @@ void playGame_easyMode(int playerChoice){
         tankH_tub, tankB_tub, tankG_tub, tankD_tub);
 		
         
-        
+        replaceMatrixWithAnother(tankD_ts,tankJ->bodyWork);
 
         //Lié au key_pressed
         int c;
 
-        tankJ = initTankPlayer(tankJ);
-    
-  
-        replaceMatrixWithAnother(tankD_ts,tankJ->bodyWork);
+        
        
         //On charge le tank dans la matrice à la position de départ
         fmap = fopen("../models/map/map_alph.txt", "r+");
@@ -167,7 +165,6 @@ void playGame_easyMode(int playerChoice){
             writingMat(nbLineMap, nbColMap, map, fmap);
            
             loadTankInMatrix(map, tankJ);
-            
             fclose(fmap);
 
         }
@@ -182,24 +179,32 @@ void playGame_easyMode(int playerChoice){
         while (1){
 
                     c = key_pressed();
-                
-                    moveTankPlayer(tankJ,
+                    //printf("Adresse TankJ= %p\n", tList->firstTank);
+                    moveTankPlayer(tList->firstTank,
                     tankH_ts, tankB_ts, tankG_ts, tankD_ts,
                     tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                     tankH_tub, tankB_tub, tankG_tub, tankD_tub,
                     map, c, obusList);
 
-                    /*generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 
-                    tankG_tub, map, tList, 1);*/
+                    if(timer_enemy == 5000){
+                        //printf("Dans la condition, Adresse Tank Joueur = %p\n", tList->firstTank);
+                        generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 
+                        tankG_tub, map, tList);
+                    }
+                        
 
-                    /*moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
-                    tankH_tb, tankB_tb, tankG_tb, tankD_tb,
-                    tankH_tub, tankB_tub, tankG_tub, tankD_tub,
-                    map, tList);*/
+                        moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
+                        tankH_tb, tankB_tb, tankG_tb, tankD_tb,
+                        tankH_tub, tankB_tub, tankG_tub, tankD_tub,
+                        map, tList);
+                    //printf("Timer = %d\n", timer_enemy);
+                    timer_enemy++;
 
+                    
 
+                    moveObus(obusList, map, tList->firstTank, tList);
                     //Lié aux déplacements de l'utilisateur
-                    moveObus(obusList, map, tankJ, tList);
+                    
 
                 }
         

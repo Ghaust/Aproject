@@ -306,3 +306,132 @@ void deleteObusById(ObusList *list, int id){
         (char **tankB_ts, char **tankB_tb, char **tankB_tub,
 char **tankG_ts, char **tankG_tb, char **tankG_ub, 
 char **map, TankList *tankList, int modeJeu)
+
+
+//generer pour mode difficile
+else if(modeJeu == 2){
+        nbTanks = 15;
+
+        do{
+            Tank *tank = initTankEnemy(tank);
+            randPos = rand()%2-1;
+            if(randPos == 1){
+                switch(tank->armor){
+                        case 1:
+                            replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
+                            if(!checkIfSpawnIsFree(map, tank->posX, tank->posY))
+                                break;
+                            else
+                                loadTankInMatrix(map,tank);
+                            break;
+                        case 2:
+                            replaceMatrixWithAnother(tankB_tb,tank->bodyWork);
+                            if(!checkIfSpawnIsFree(map, tank->posX, tank->posY))
+                                break;
+                            else
+                                loadTankInMatrix(map,tank);
+                            break;
+                        case 3:
+                            replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
+                            if(!checkIfSpawnIsFree(map, tank->posX, tank->posY))
+                                break;
+                            else
+                                loadTankInMatrix(map,tank);
+                            break;
+                }
+                tank->direction = 'G';
+                tank->posX = posX_droite;
+                tank->posY = posY_droite;
+            }else{
+                tank->direction = 'B';
+                tank->posX = posX_haut;
+                tank->posY = posY_haut;
+                switch(tank->armor){
+                        case 1:
+                            replaceMatrixWithAnother(tankG_ts,tank->bodyWork);
+                            if(!checkIfSpawnIsFree(map, tank->posX, tank->posY))
+                                break;
+                            else
+                                loadTankInMatrix(map,tank);
+                            break;
+                        case 2:
+                            replaceMatrixWithAnother(tankG_tb,tank->bodyWork);
+                            if(!checkIfSpawnIsFree(map, tank->posX, tank->posY))
+                                break;
+                            else
+                                loadTankInMatrix(map,tank);
+                            break;
+                        case 3:
+                            replaceMatrixWithAnother(tankG_ts,tank->bodyWork);
+                            if(!checkIfSpawnIsFree(map, tank->posX, tank->posY))
+                                break;
+                            else
+                                loadTankInMatrix(map,tank);
+                            break;
+                }
+            }
+            insertNewTank(tankList, tank);
+            nbTanks--;
+
+        }while(nbTanks != 0);
+
+    }
+
+
+void moveTank(Tank *tank, char **map){
+    int i, j;
+    int k=tank->posX, l=tank->posY;
+
+    for(i = 0 ; i < nbLineTank ; i++){
+        l=0;
+        for(j = 0;  j < nbColTank; j++){
+
+            moveToPosXY(1+tank->posX+i, 1+tank->posY+j);
+            switch(tank->bodyWork[k][l]){
+                    case '0':
+                        printf("\033[37m╔\033[00m");
+                        break;
+                    case '1':
+                        printf("\033[37m╗\033[00m");
+                        break;
+                    case '2':
+                        printf("\033[37m╗\033[00m╝");
+                        break;
+                    case '3':
+                        printf("\033[37m╗\033[00m╚");
+                        break;
+                    case '-':
+                        printf("\033[37m╗\033[00m═");
+                        break;
+                    case '|':
+                        printf("\033[37m╗\033[00m║");
+                        break;
+                    case 'E':
+                        printf("\033[37m▓\033[00m");
+                        break;
+                    case 'M':
+                        printf("▓");
+                        break;
+                    case 'L':
+                        printf("\033[37m_\033[00m");
+                        break;
+                    case 'T':
+                        printf("\033[37m|\033[00m");
+                        break;
+                    case 'B':
+                        printf("\033[37m█\033[00m");
+                        break;
+                    case 'I':
+                        printf("\033[37m▀\033[00m");
+                        break;
+                    case 'U':
+                        printf("\033[37m─\033[00m");
+                        break;
+                }
+            map[k][l] = tank->bodyWork[i][j];
+            
+            l++;
+        }
+        k++;
+    }
+}
