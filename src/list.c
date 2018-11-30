@@ -111,9 +111,6 @@ void insertNewObus(ObusList *list, Obus *obus){
         list->firstObus = list->firstObus->next;
     }
     list->firstObus->next = obus;
-    
-    //list->firstObus->next = obus;
-    //list->firstObus->next->next = NULL;
    
 }
 

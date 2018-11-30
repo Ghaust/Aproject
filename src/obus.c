@@ -23,7 +23,6 @@ ObusList *generateObus(Tank *t, char **map, ObusList *obusList){
             o->direction = 'H';
             o->posX = t->posX--;
             o->posY = t->posY+5;
-            map[o->posX][o->posY] = o->caractere;
             moveToPosXY(o->posX, o->posY);
             break;
 
@@ -32,7 +31,6 @@ ObusList *generateObus(Tank *t, char **map, ObusList *obusList){
             o->direction = 'B';
             o->posX = t->posX+6; 
             o->posY = t->posY+5;
-            map[o->posX][o->posY] = o->caractere;
             moveToPosXY(o->posX, o->posY);
             break;
 
@@ -41,7 +39,6 @@ ObusList *generateObus(Tank *t, char **map, ObusList *obusList){
             o->direction = 'G';
             o->posX += t->posX+3; 
             o->posY = t->posY--; 
-            map[o->posX][o->posY] = o->caractere;
             moveToPosXY(o->posX, o->posY);
             break;
 
@@ -49,7 +46,6 @@ ObusList *generateObus(Tank *t, char **map, ObusList *obusList){
             o->direction = 'D';
             o->posX += t->posX+3; 
             o->posY = (t->posY+10);
-            map[o->posX][o->posY] = o->caractere;
             moveToPosXY(o->posX, o->posY);
             break;
     }
@@ -100,42 +96,6 @@ int damage_tank(Tank *t, char c, Obus *o, TankList *tList, char **map){
 }
 
 
-int changeBlock(char **map, Obus *o){
-    switch(o->direction){
-            case 'H':
-                 moveToPosXY(o->posX--, o->posY);
-                 break;
-            case 'B':
-                 moveToPosXY(o->posX++, o->posY);
-                 break;
-            case 'G':
-                 moveToPosXY(o->posX, o->posY--);
-                 break;
-            case 'D':
-                 moveToPosXY(o->posX, o->posY++);
-                 break;
-        }
-       
-
-    if(map[o->posX][o->posY] == 'R'){
-        
-        
-        printf(" ");
-        printf("\033[31m☎\033[00m");
-        map[o->posX][o->posY] = 'A';
-        return 1;
-
-    }else if(map[o->posX][o->posY] == 'A'){
-
-        map[o->posX][o->posY] = ' ';
-        //moveToPosXY(o->posX, o->posY);
-        printf(" ");
-
-        return 1;
-    }
-    return 0;
-}
-
 void checkIfPiouPiouIsAlright(char c){
     FILE *fgameover = NULL;
     fgameover = fopen("../models/menus/gameover.txt", "r+");
@@ -151,101 +111,43 @@ void checkIfPiouPiouIsAlright(char c){
     }
 }
 
-void collision(Obus *o, char **map, ObusList *obusList, Tank *t, TankList *tList){
+int collision(Obus *o, char **map, ObusList *obusList, Tank *t, TankList *tList, int oldX, int oldY){
+    int oldx, oldy;
+    oldx = o->posX;
+    oldy=o->posY;
+	
+    switch(map[o->posX][o->posY]){
+        case 'R':        //Brique blanche
+            map[o->posX][o->posY]= ' ';
+            return 0;
+        case 'A':           //Brique rouge
+            map[o->posX][o->posY]= 'R';
+            return 1;
+        case 'K':         //Oiseau
+            checkIfPiouPiouIsAlright('K');
+        case 'E':       //Eau
+            map[oldX][oldY] = ' ';
+            return 2;
+        case '|':
+            map[oldX][oldY] = ' ';
+            return 2;
+        case '-':
+            map[oldX][oldY] = ' ';
+            return 2;
+        case ' ': 
+            return 3;
+        default:
+            return 4;
 
-	switch(o->direction){
-        
-        case 'H':
-             if(map[o->posX-1][o->posY] == ' '){
-                moveToPosXY(o->posX, o->posY);
-                printf(" ");
-                map[o->posX][o->posY] = ' ';
-                
-                o->posX--;
-                moveToPosXY(o->posX, o->posY);
-                printf("✴");
-                map[o->posX][o->posY]=o->caractere;
-
-            }
-            else{
-                /*damage_tank(t, map[posX-1][posY], o, tList, map) ||*/ 
-                o->posX--;
-                if(changeBlock(map, o))
-                    deleteObusById(obusList, o->id, map);
-                checkIfPiouPiouIsAlright(map[o->posX-1][o->posY]);
-            }
-            break;
-        case 'B':
-             if(map[o->posX+1][o->posY] == ' '){
-                moveToPosXY(o->posX, o->posY);
-                printf(" ");
-                map[o->posX][o->posY] = ' ';
-                
-                o->posX++;
-                moveToPosXY(o->posX, o->posY);
-                printf("✴");
-                map[o->posX][o->posY]=o->caractere;
-                
-
-                
-            }
-            else{
-                o->posX++;
-                if(changeBlock(map, o))
-                    deleteObusById(obusList, o->id,map);
-                checkIfPiouPiouIsAlright(map[o->posX+1][o->posY]);
-                
-            }
-            break;
-        case 'G':
-             if(map[o->posX][o->posY-1] == ' '){
-                moveToPosXY(o->posX, o->posY);
-                printf(" ");
-                map[o->posX][o->posY] = ' ';
-                
-                
-                o->posY--;
-                moveToPosXY(o->posX, o->posY);
-                printf("✴");
-                map[o->posX][o->posY]=o->caractere;
-
-                
-            }
-            else{
-                o->posY--;
-                if(changeBlock(map, o))
-                    deleteObusById(obusList, o->id,map);
-                checkIfPiouPiouIsAlright(map[o->posX][o->posY-1]);
-            }
-            break;
-        case 'D':
-            if(map[o->posX][o->posY+1] == ' '){
-                moveToPosXY(o->posX, o->posY);
-                map[o->posX][o->posY] = ' ';
-                printf(" ");
-                
-                o->posY++;
-                moveToPosXY(o->posX, o->posY);
-                map[o->posX][o->posY]=o->caractere;
-                printf("✴");
-
-                
-            }
-            else{
-                o->posY++;
-                if(changeBlock(map, o))
-                    deleteObusById(obusList, o->id,map);
-                checkIfPiouPiouIsAlright(map[o->posX][o->posY+1]);
-            }
-            break;
-	}
+    }
 }
 
 
 void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
     int oldX, oldY;
+    int returnValue = 0;
     Obus *obus = o->firstObus->next;
-
+    
     if(o == NULL)
         exit(EXIT_FAILURE);
 
@@ -254,29 +156,46 @@ void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
        if(obus->timer>1000){
             oldX = obus->posX;
             oldY = obus->posY;
-
-            switch(obus->direction){
-                case 'H':
-
-                    collision(obus, map, o, t, tList);
-                    break;
-                case 'B':
             
-                    collision(obus, map, o, t, tList); 
+            if(obus->direction == 'H')
+                obus->posX--;
+            else if(obus->direction == 'B')
+                obus->posX++;
+            else if(obus->direction == 'G')
+                obus->posY--;
+            else if(obus->direction == 'D')
+                obus->posY++;   
+            
+            returnValue = collision(obus, map, o, t, tList, oldX, oldY);
+            
+            switch(returnValue){
+                case 0:
+                    moveToPosXY(oldX, oldY);
+                    printf(" ");
+                    moveToPosXY(obus->posX, obus->posY);
+                    printf(" ");
+                    deleteObusById(o, obus->id, map);
                     break;
-
-                case 'G':
-
-                    collision(obus, map, o, t, tList);
+                case 1:
+                    moveToPosXY(oldX, oldY);
+                    printf(" ");
+                    moveToPosXY(obus->posX, obus->posY);
+                    printf("\033[31m☎\033[00m");
                     break;
-
-                case 'D':
-
-                    collision(obus, map, o, t, tList);
+                case 2:
+                    moveToPosXY(oldX, oldY);
+                    printf(" ");
                     break;
-                    
+                case 3:
+                    moveToPosXY(oldX, oldY);
+                    printf(" ");
+                    moveToPosXY(obus->posX, obus->posY);
+                    printf("✴");
+                    break;
+                case 4:
+                    break;
             }
-            
+
             obus->timer = 0;
         }else
             obus->timer++;

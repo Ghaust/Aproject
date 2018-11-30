@@ -461,3 +461,135 @@ FILE *tb_bas = NULL, *tub_hardmode = NULL, *tub_easyMode = NULL;
     freeMat(nbLineTank, mat1);
     freeMat(nbLineTank, mat2);
     freeMat(nbLineTank, mat3);*/
+
+
+
+    //tank qui bouffe tout sur le passage
+
+
+int changeBlock(char **map, int posX, int posY){
+    if(map[posX][posY] == 'R'){
+
+        map[posX][posY] = 'A';
+        moveToPosXY(posX, posY);
+        printf("\033[31m☎\033[00m");
+        return 1;
+    }else if(map[posX][posY] == 'A'){
+
+        map[posX][posY] = ' ';
+        moveToPosXY(posX, posY);
+        printf(" ");
+
+        return 1;
+    }
+    return 0;
+}
+
+void checkIfPiouPiouIsAlright(char c){
+    FILE *fgameover = NULL;
+    fgameover = fopen("../models/menus/gameover.txt", "r+");
+
+    if(fgameover != NULL){
+        if(c == 'K'){
+            system("clear");
+            dispFile(fgameover);
+
+            fclose(fgameover);
+            exit(0);
+        }
+    }
+}
+
+switch(o->direction){
+        
+        case 'H':
+             if(map[oldx-1][oldy] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                printf(" ");
+                map[o->posX][o->posY] = ' ';
+                
+                o->posX--;
+                moveToPosXY(o->posX, o->posY);
+                printf("✴");
+                map[o->posX][o->posY]=o->caractere;
+
+            }
+            else{
+                /*damage_tank(t, map[posX-1][posY], o, tList, map) ||*/ 
+                
+                moveToPosXY(o->posX, o->posY);
+                //printf(" ");
+                map[o->posX][o->posY] = ' ';
+                o->posX--;
+                moveToPosXY(1,1);
+                printf("%c", map[o->posX][o->posY]);
+                exit(-1);
+                if(changeBlock(map, o))
+                    deleteObusById(obusList, o->id, map);
+                checkIfPiouPiouIsAlright(map[o->posX-1][o->posY]);
+            }
+            break;
+        case 'B':
+             if(map[o->posX+1][o->posY] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                printf(" ");
+                map[o->posX][o->posY] = ' ';
+                
+                o->posX++;
+                moveToPosXY(o->posX, o->posY);
+                printf("✴");
+                map[o->posX][o->posY]=o->caractere;
+                
+
+                
+            }
+            else{
+                o->posX++;
+                if(changeBlock(map, o))
+                    deleteObusById(obusList, o->id,map);
+                checkIfPiouPiouIsAlright(map[o->posX+1][o->posY]);
+                
+            }
+            break;
+        case 'G':
+             if(map[o->posX][o->posY-1] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                printf(" ");
+                map[o->posX][o->posY] = ' ';
+                
+                
+                o->posY--;
+                moveToPosXY(o->posX, o->posY);
+                printf("✴");
+                map[o->posX][o->posY]=o->caractere;
+
+                
+            }
+            else{
+                o->posY--;
+                if(changeBlock(map, o))
+                    deleteObusById(obusList, o->id,map);
+                checkIfPiouPiouIsAlright(map[o->posX][o->posY-1]);
+            }
+            break;
+        case 'D':
+            if(map[o->posX][o->posY+1] == ' '){
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY] = ' ';
+                printf(" ");
+                
+                o->posY++;
+                moveToPosXY(o->posX, o->posY);
+                map[o->posX][o->posY]=o->caractere;
+                printf("✴");
+
+                
+            }
+            else{
+                o->posY++;
+                if(changeBlock(map, o))
+                    deleteObusById(obusList, o->id,map);
+                checkIfPiouPiouIsAlright(map[o->posX][o->posY+1]);
+            }
+            break;
+	}

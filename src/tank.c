@@ -170,20 +170,15 @@ Tank *initTankPlayer(){
 
 void moveTank(Tank *tank, char **map){
     int i, j;
-    int k=tank->posX, l=tank->posY;
-
     for(i = 0 ; i < nbLineTank ; i++){
-        l=0;
         for(j = 0;  j < nbColTank; j++){
 
             moveToPosXY(1+tank->posX+i, 1+tank->posY+j);
             printSwitch(tank->bodyWork[i][j]);
             
-            map[k][l] = tank->bodyWork[i][j];
-            
-            l++;
+            map[tank->posX+i][tank->posY+j] = tank->bodyWork[i][j];
+
         }
-        k++;
     }
 
 }
@@ -266,20 +261,16 @@ int isFree(char **map, Tank *tank){
 
 void deleteTank(Tank *tank, char **map){
     int i, j;
-    int k=tank->posX, l=tank->posY;
-
+    
         for(i=0; i < nbLineTank; i++){
-            l=0;
             for(j=0; j < nbColTank; j++){
 
                 moveToPosXY(1+tank->posX+i, 1+tank->posY+j);
                 printf(" ");
                 
-                map[k][l] = ' ';
-                
-                l++;
+                map[tank->posX+i][tank->posY+j] = ' ';
+
             }
-            k++;
         }
 }
 

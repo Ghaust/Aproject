@@ -66,7 +66,8 @@ void dispMatrix(int nbL, int nbC, char **mat){
     int i, j;
     for(i=0; i<nbL; i++){
         for(j=0; j<nbC; j++){
-            printSwitch(*(*(mat + i) + j));
+            //printSwitch(*(*(mat + i) + j));
+            printf("%c", *(*(mat + i) + j));
         }
         printf("\n");
     }
@@ -172,13 +173,18 @@ void playGame_easyMode(int playerChoice){
             exit(-1);
 
         system("clear");
-        dispMatrix(nbLineMap, nbColMap, map);
+       
         system("stty -echo");
         //system("setterm -cursor off");
 
         while (1){
+                     
 
                     c = key_pressed();
+                    if(c == UP || c == DOWN || c == LEFT || c == RIGHT || c == BANG){
+                        system("clear");
+                        dispMatrix(nbLineMap, nbColMap, map);
+                        }
                     //printf("Adresse TankJ= %p\n", tList->firstTank);
                     moveTankPlayer(tList->firstTank,
                     tankH_ts, tankB_ts, tankG_ts, tankD_ts,
@@ -191,15 +197,15 @@ void playGame_easyMode(int playerChoice){
                         generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 
                         tankG_tub, map, tList);
                     }
-                        
-
+                    timer_enemy++;  
+                    /*
                         moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
                         tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                         tankH_tub, tankB_tub, tankG_tub, tankD_tub,
                         map, tList);
                     //printf("Timer = %d\n", timer_enemy);
-                    timer_enemy++;
-
+                    
+                    */
                     
 
                     moveObus(obusList, map, tList->firstTank, tList);
