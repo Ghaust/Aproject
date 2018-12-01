@@ -1,4 +1,3 @@
-
  			 __  __       _         __  __                  
  			|  \/  |     (_)       |  \/  |                 
  			| \  / | __ _ _ _ __   | \  / | ___ _ __  _   _ 
@@ -31,9 +30,9 @@
      │2                                               HARD MODE   /                                                              `..-.-:/ooyhhhysosyyyyhddssss.           
      └───────────────────────────────────────────────────────────                                                              :dhyoosyhsooso++++oyoossyyhhdd-//:-::-..````       
      ┌────────────────────────────────────────────────────────────┐                                   `.....-------::://++++oossyyhhhdhddmdmmmdddhmddhhhyyyhhhhyssssyysysssydh-
-     │3                                               HELP        /                  ++o++++ooosyyyyhhhddddhhhyysooosooossssssooosyydmNNmmmmNmmmmmNmmdddmNmddyyyyyyhyysoosyddmho 
-     └───────────────────────────────────────────────────────────                    osoo++///:::-..`` ``   .:/+oosssyhhso+ooooshhysso++oossyyyhhhhhhhdddddmmmNNmmmmmddddddmmmddho` 
-     ┌────────────────────────────────────────────────────────────┐                                         /sssyyyhhhhdhyoyyyhsssooossoosshhhdddddddddddddddddddmmmmmmNMNNNNNNmo/-  
+     │3                                               HELP        /                  ++o++++ooosyyyyhhhddddhhhyysooosooossssssooosyydmelmuyguapojosephemmanuelyyyyyyhyysoosyddmho 
+     └───────────────────────────────────────────────────────────                    osoo++///:::-..`` ``   .:/+oosssyhhso+ooooshhysabidjanCOTEDIVOIREyeahyeahyeahNmmmmmddddddmmmddho` 
+     ┌────────────────────────────────────────────────────────────┐                                         /sssyyyhhhhdhyoyyyhsssooossoosshhhdbanzioddddddddddmmmmmmNMNNNNNNmo/-  
      │4                                               EXIT        /                                        +ddddhyydyssyyo++/+++ssyyhddddddmmmmmmmNNNNNNNNNmNNNNNNNNNNNNNNNNNh
      └───────────────────────────────────────────────────────────                                         :dNNmNhmmhysssooosdmmNmmNNNNNNmmNNNmNmNmmmmmmNNNNNNNNNNNMNNNNMNmmd-
                                                                                                            `:oddoNMNNmmhysdmmNmmmmmmmmmmmNNNNNNNNNNNNNMMNNNNNMNNNNNNNmmNMm+
