@@ -6,7 +6,7 @@ char ** matrixAlloc(int nbL, int nbC){
     char **t = malloc(nbL * sizeof(char*));
 
     for(i=0; i<nbL; i++){
-        *(t+i) = malloc(nbC*sizeof(char));
+        t[i] = malloc(nbC*sizeof(char));
     }
     return t;
 }
@@ -59,9 +59,9 @@ char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub){
 
     FILE *ftankH_ts = NULL, *ftankD_ts = NULL, *ftankG_ts = NULL, *ftankB_ts = NULL;
     FILE *ftankH_tb = NULL, *ftankD_tb = NULL, *ftankG_tb = NULL, *ftankB_tb = NULL;
-    
+
     FILE *ftankH_tub = NULL, *ftankD_tub = NULL, *ftankG_tub = NULL, *ftankB_tub = NULL;
-    
+
 
     ftankH_ts = fopen("../models/tanks/deplacement_TS/ts_haut.txt", "r+");
     ftankB_ts = fopen("../models/tanks/deplacement_TS/ts_bas.txt", "r+");
@@ -115,5 +115,3 @@ char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub){
     else
         exit(-1);
 }
-
-

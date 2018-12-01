@@ -23,13 +23,13 @@ void insertNewTank(TankList *list, Tank *tank){
     list->id++;
     tank->id = list->id;
 
-    
+
     while(list->firstTank->next != NULL){
         list->firstTank = list->firstTank->next;
     }
     list->firstTank->next = tank;
-    
-    
+
+
 }
 
 void deleteFirstTank(TankList *list){
@@ -48,7 +48,7 @@ void deleteFirstTank(TankList *list){
 void deleteTankById(TankList *list, int id, char **map){
   if(list == NULL)
      exit(EXIT_FAILURE);
-  
+
   if(list->firstTank->id == id) {
     Tank *toDelete = list->firstTank;
     deleteTank(toDelete, map);
@@ -103,15 +103,15 @@ void insertNewObus(ObusList *list, Obus *obus){
 
     if(list == NULL || obus == NULL)
         exit(EXIT_FAILURE);
-        
+
     list->id++;
     obus->id = list->id;
-
-    while(list->firstObus->next != NULL){
-        list->firstObus = list->firstObus->next;
+    Obus *actuel = list->firstObus;
+    while(actuel->next != NULL){
+      actuel=actuel->next;
     }
-    list->firstObus->next = obus;
-   
+    actuel->next= obus;
+    obus->next=NULL;
 }
 
 void deleteFirstObus(ObusList *list){
@@ -130,7 +130,7 @@ void deleteFirstObus(ObusList *list){
 void deleteObusById(ObusList *list, int id, char **map){
   if(list == NULL)
      exit(EXIT_FAILURE);
-  
+
   if(list->firstObus->id == id) {
     list->firstObus = list->firstObus->next;
     return;
@@ -139,7 +139,7 @@ void deleteObusById(ObusList *list, int id, char **map){
   Obus *next;
   Obus *actualO = list->firstObus;
 
-  while(actualO != NULL) {
+  while(actualO->next != NULL) {
     if(actualO->next->id == id) {
       next = actualO->next->next;
       free(actualO->next);

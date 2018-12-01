@@ -83,14 +83,14 @@ void dispFile(FILE *file){
 }
 
 int deployMenu(){
-    FILE *menu = NULL;
+    FILE *menu = NULL, *help = NULL;
     
     menu = fopen("../models/menus/menu_accueil.txt", "r+");
-    
+    help = fopen("../models/menus/help.txt", "r+");
     int toucheSaisie = 0;
 
     system("clear");
-    if(menu != NULL){
+    if(menu != NULL && help != NULL){
         //system("play -q ../sons/intro.wav &"); // $! pour le PID
          
         do{
@@ -109,6 +109,8 @@ int deployMenu(){
             
         }
         else if(toucheSaisie== 51 || toucheSaisie == 34){
+            dispFile(help);
+            sleep(10);
             return 3;
             
         }
@@ -125,6 +127,7 @@ int deployMenu(){
     //on stoppe le processus qui s'exécute en arrière plan echo lordeje >
     system("sudo pkill play");
     
+    fclose(help);
     fclose(menu);
 }
 
