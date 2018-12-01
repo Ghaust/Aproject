@@ -1,7 +1,7 @@
 #include "dispFunc.h"
 
-Obus *initObus(Obus *o){
-    o = malloc(1*sizeof(Obus));
+Obus *initObus(){
+    Obus *o = malloc(1*sizeof(Obus));
 
     o->posX = 0;
     o->posY = 0;
@@ -12,8 +12,7 @@ Obus *initObus(Obus *o){
 
 
 ObusList *generateObus(Tank t, char **map, ObusList *obusList){
-    Obus *o;
-    o = initObus(o);
+    Obus *o = initObus();
 
     switch(t.direction){
 

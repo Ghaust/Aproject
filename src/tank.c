@@ -187,16 +187,14 @@ void moveTank(Tank *tank, char **map){
 
 int isFree(char **map, Tank *tank){
     //On va vérifier que toute la ligne devant le tank est libre pour qu'il puisse avancer
-    int res = 0;
     int posX = 0;
     int posY = 0;
-    int i, j;
+    int i;
     int ok=1;
     switch(tank->direction){
         //Si haut
         case 'H':
             //Pour éviter les sorties du cadre
-
             if(tank->posX>0){
                 for(i=0;i<nbColTank;i++){
                     if(map[tank->posX-1][tank->posY+i] != ' ')
@@ -220,7 +218,6 @@ int isFree(char **map, Tank *tank){
             }
         //Si Gauche
         case 'G':
-            //posY--;
             if(tank->posY>0){
                 for(i=0;i<nbLineTank;i++){
                     if(map[tank->posX+i][tank->posY-1] != ' ') {
@@ -229,10 +226,6 @@ int isFree(char **map, Tank *tank){
                     }
                 }
                 return 1;
-                /*if(res == nbLineTank)
-                    return 1;
-                else
-                    return 0;*/
                 break;
             }
         case 'D':
@@ -362,9 +355,7 @@ char **map, int c, ObusList *obusList){
                                 tankJ->direction = 'D';
                                 if((isFree(map, tankJ))){
                                     deleteTank(tankJ, map);
-                                    //printf("adresse Tank Joueur dans move tank player = %p\n", tankJ);
                                     replaceMatrixWithAnother(tankD_ts, tankJ->bodyWork);
-                                    //exit(0);
                                     tankJ->posY++;
                                     moveTank(tankJ, map);
                                 }
