@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "dispfunc.h": "c",
-        "tank.h": "c",
-        "iterator": "c"
-    },
-    "C_Cpp.intelliSenseEngineFallback": "Disabled"
-}
