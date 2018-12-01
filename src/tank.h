@@ -17,7 +17,7 @@ char **map, TankList *tankList);
 void moveTankEnemy(char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
-char **map, TankList *tankList);
+char **map, TankList *tankList, ObusList *oList);
 
 void moveTankPlayer(Tank *tankJ,
 char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,

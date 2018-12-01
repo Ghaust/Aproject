@@ -45,6 +45,29 @@ void deleteFirstTank(TankList *list){
     }
 }
 
+int damage_tank(TankList *tList, int id_damaged, int id_damager, char **map, ObusList *oList) {
+  if((id_damaged!=90)&&(id_damager!=90)) 
+        return 0;
+  Tank* actuel;
+  Tank* damaged = NULL;
+  Tank* damager = NULL;
+  actuel = tList->firstTank;
+  while(actuel!=NULL) {
+    if(actuel->id == id_damaged) damaged = actuel;
+    if(actuel->id == id_damager) damager = actuel;
+    actuel = actuel->next;
+  }
+  //damaged->touche += damager->statut;
+  damaged->armor--;
+  if(damaged->armor == 1) {
+    deleteAllObus(id_damaged, oList);
+    deleteTankById(tList, damaged->id, map);
+    return 1;
+  }
+  return 0;
+}
+
+
 void deleteTankById(TankList *list, int id, char **map){
   if(list == NULL)
      exit(EXIT_FAILURE);
@@ -127,7 +150,7 @@ void deleteFirstObus(ObusList *list){
 }
 
 
-void deleteObusById(ObusList *list, int id, char **map){
+void deleteObusById(ObusList *list, int id){
   if(list == NULL)
      exit(EXIT_FAILURE);
 
@@ -147,6 +170,17 @@ void deleteObusById(ObusList *list, int id, char **map){
       return;
     }
     actualO = actualO->next;
+  }
+}
+
+void deleteAllObus(int iddamaged, ObusList *list) {
+  Obus *actuel = list->firstObus->next;
+  while(actuel != NULL) {
+    if(actuel->provenance == iddamaged) {
+      moveToPosXY(actuel->posX, actuel->posY);
+      deleteObusById(list, actuel->id);
+    }
+    actuel = actuel->next;
   }
 }
 

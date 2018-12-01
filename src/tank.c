@@ -22,9 +22,9 @@ void loadTankInMatrix(char **mat, Tank *tank){
 Tank *initTankEnemy(){
    Tank *tank = malloc(sizeof(Tank));
    int randArmorMax = 0, randArmorMin = 0;
-
-   randArmorMax = rand()%50-1;
-   randArmorMin = rand()%20-5;
+   
+   randArmorMax = rand()%10+1;
+   randArmorMin = rand()%5+1;
 
    tank->bodyWork = matrixAlloc(nbLineTank, nbColTank);
     //On génère aléatoirement les tanks à des positions différentes
@@ -66,8 +66,8 @@ char **map, TankList *tankList){
 
     Tank *tank = initTankEnemy();
 
-    randPos = rand()%2-1;
-    
+    do{
+    randPos = rand()%3+1;
     if(randPos == 1){
                 tank->posX = posX_droite;
                 tank->posY = posY_droite;
@@ -139,12 +139,7 @@ char **map, TankList *tankList){
             }
             insertNewTank(tankList, tank);
             nbTanks--;
-    /*do{
-
-
-
-        //exit(0);
-        }while(nbTanks != 0);*/
+    }while(nbTanks != 0);
 
 
 }
@@ -184,7 +179,6 @@ void moveTank(Tank *tank, char **map){
 }
 
 //fonction booléenne, retourne 1 si le tank peut avancer, 0 sinon
-
 int isFree(char **map, Tank *tank){
     //On va vérifier que toute la ligne devant le tank est libre pour qu'il puisse avancer
     int posX = 0;
@@ -261,23 +255,21 @@ void deleteTank(Tank *tank, char **map){
 void moveTankEnemy(char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
-char **map, TankList *tankList){
+char **map, TankList *tankList, ObusList *oList){
 
-    Tank *eTank = tankList->firstTank;
+    Tank *eTank = tankList->firstTank->next;
     int randPos = 0;
 
-    eTank = eTank->next;
-
     while(eTank != NULL){
-        if(eTank->timer>5000000){
-            randPos = rand()%4-1;
+        if(eTank->timer>3000){
+            randPos = rand()%6+1; 
             if(eTank->armor == 1){
                 switch(randPos){
                     case 1:
                         eTank->direction = 'H';
                         if(isFree(map, eTank) ){
                             deleteTank(eTank, map);
-                            replaceMatrixWithAnother(tankG_ts,eTank->bodyWork);
+                            replaceMatrixWithAnother(tankH_ts,eTank->bodyWork);
                             eTank->posX--;
                             moveTank(eTank, map);
                         }
@@ -286,7 +278,7 @@ char **map, TankList *tankList){
                         eTank->direction = 'B';
                         if(isFree(map, eTank) ){
                             deleteTank(eTank, map);
-                            replaceMatrixWithAnother(tankG_ts,eTank->bodyWork);
+                            replaceMatrixWithAnother(tankB_ts,eTank->bodyWork);
                             eTank->posX++;
                             moveTank(eTank, map);
                         }
@@ -304,11 +296,18 @@ char **map, TankList *tankList){
                         eTank->direction = 'D';
                         if(isFree(map, eTank) ){
                             deleteTank(eTank, map);
-                            replaceMatrixWithAnother(tankG_ts,eTank->bodyWork);
+                            replaceMatrixWithAnother(tankD_ts,eTank->bodyWork);
                             eTank->posY++;
                             moveTank(eTank, map);
                         }
                         break;
+                    case 5:
+                    if(oList->firstObus->timer>600){
+                        generateObus(*eTank, map, oList);
+                        system("play -q ../sons/obus.wav &");
+                        break;
+                    }else   
+                            oList->firstObus->timer++;
 
                 }
             }
@@ -327,7 +326,6 @@ char **tankH_ts, char **tankB_ts, char **tankG_ts, char **tankD_ts,
 char **tankH_tb, char **tankB_tb, char **tankG_tb, char **tankD_tb,
 char **tankH_tub, char **tankB_tub, char **tankG_tub, char **tankD_tub,
 char **map, int c, ObusList *obusList){
-
     switch(c) {
                         case UP:
                             tankJ->direction = 'H';
@@ -375,7 +373,10 @@ char **map, int c, ObusList *obusList){
                                  break;
 
                         case BANG:
-                                generateObus(*tankJ, map, obusList);
+                                    obusList->firstObus->timer=0;
+                                    generateObus(*tankJ, map, obusList);
+                                    system("play -q ../sons/obus.wav &");
+                                
                                 break;
                     }
 }

@@ -30,10 +30,7 @@ void printSwitch(char c){
                         break;
                     case 'R':
                         printf("\033[37m☎\033[00m");
-                        break;
-                    case 'P': //palmier
-                        printf("\033[37m☎\033[00m");
-                        break;     
+                        break; 
                     case 'O':
                         printf("O");
                         break;
@@ -54,6 +51,9 @@ void printSwitch(char c){
                         break;
                     case 'U':
                         printf("─");
+                        break;
+                    case 'K':
+                        printf("K");
                         break;
                     default:
                         printf("%c", c);
@@ -91,7 +91,7 @@ int deployMenu(){
 
     system("clear");
     if(menu != NULL && help != NULL){
-        //system("play -q ../sons/intro.wav &"); // $! pour le PID
+        system("play -q ../sons/intro.wav &"); // $! pour le PID
          
         do{
             toucheSaisie = key_pressed();
@@ -124,8 +124,6 @@ int deployMenu(){
         exit(-1);
      }
     
-    //on stoppe le processus qui s'exécute en arrière plan echo lordeje >
-    system("sudo pkill play");
     
     fclose(help);
     fclose(menu);
@@ -176,9 +174,9 @@ void playGame_easyMode(int playerChoice){
             exit(-1);
 
         system("clear");
-       
+        
         system("stty -echo");
-        //system("setterm -cursor off");
+        system("setterm -cursor off");
 
         while (1){
                      
@@ -187,34 +185,31 @@ void playGame_easyMode(int playerChoice){
                     if(c == UP || c == DOWN || c == LEFT || c == RIGHT || c == BANG){
                         system("clear");
                         dispMatrix(nbLineMap, nbColMap, map);
-                        }
-                    //printf("Adresse TankJ= %p\n", tList->firstTank);
+                        
+                    }
+                   
                     moveTankPlayer(tList->firstTank,
                     tankH_ts, tankB_ts, tankG_ts, tankD_ts,
                     tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                     tankH_tub, tankB_tub, tankG_tub, tankD_tub,
                     map, c, obusList);
                     
-                    if(timer_enemy == 5000){
-                        //printf("Dans la condition, Adresse Tank Joueur = %p\n", tList->firstTank);
+                    if(timer_enemy == 1000){
+                        
                         generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 
                         tankG_tub, map, tList);
                     }
                     timer_enemy++;  
-                    /*
+                    
                         moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
                         tankH_tb, tankB_tb, tankG_tb, tankD_tb,
                         tankH_tub, tankB_tub, tankG_tub, tankD_tub,
-                        map, tList);
-                    //printf("Timer = %d\n", timer_enemy);
-                    
-                    */
-                    
+                        map, tList, obusList);
 
                     moveObus(obusList, map, tList->firstTank, tList);
-                    //Lié aux déplacements de l'utilisateur
-                    
 
+            
+                
                 }
         
 

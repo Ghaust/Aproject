@@ -13,7 +13,7 @@ Obus *initObus(){
 
 ObusList *generateObus(Tank t, char **map, ObusList *obusList){
     Obus *o = initObus();
-
+    o->provenance = t.id;
     switch(t.direction){
 
         case 'H':
@@ -54,45 +54,6 @@ ObusList *generateObus(Tank t, char **map, ObusList *obusList){
     return NULL;
 }
 
-void explodeTank(Tank *t){
-    int i, j;
-
-    for(i=0; i<nbLineTank; i++){
-        for(j=0; j<nbColTank; j++){
-
-            moveToPosXY(1+t->posX+i, 1+t->posX+j);
-            printf("\033[37m✴\033[00m");
-
-        }
-    }
-}
-
-void checkArmor(Tank *t, TankList *tList, char **map){
-    switch(t->armor){
-        case 1:
-            explodeTank(t);
-            deleteTank(t, map);
-            deleteFirstTank(tList);
-            break;
-        case 2:
-            t->armor--;
-            break;
-        case 3:
-            t->armor--;
-            break;
-
-    }
-}
-
-int damage_tank(Tank *t, char c, Obus *o, TankList *tList, char **map){
-
-    if(c != 'A' || c != 'R' || c != 'P' || c != 'E' || c != 'K'){
-       checkArmor(t, tList, map);
-       return 1;
-    }
-    return 0;
-}
-
 
 void checkIfPiouPiouIsAlright(char c){
     FILE *fgameover = NULL;
@@ -125,7 +86,6 @@ int collision(Obus *o, char **map, int oldX, int oldY){
         case 'K':         //Oiseau
             checkIfPiouPiouIsAlright('K');
         case 'E':       //Eau
-            map[oldX][oldY] = ' ';
             return 2;
         case '|':
             map[o->posX][o->posX] = ' ';
@@ -144,17 +104,17 @@ int collision(Obus *o, char **map, int oldX, int oldY){
 
 void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
     int oldX, oldY;
-    int returnValue = 0;
+    int returnValue = 0; int id_tank_damaged = 0;
     if(o->firstObus->next==NULL) return;
     Obus *obus = o->firstObus->next;
 
-
+    
     while(obus != NULL){
        if(obus->timer>1000){
             oldX = obus->posX;
             oldY = obus->posY;
 
-            if(obus->direction == 'H')
+           if(obus->direction == 'H')
                 obus->posX--;
             else if(obus->direction == 'B')
                 obus->posX++;
@@ -162,7 +122,7 @@ void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
                 obus->posY--;
             else if(obus->direction == 'D')
                 obus->posY++;
-
+            
             returnValue = collision(obus, map, oldX, oldY);
 
             switch(returnValue){
@@ -171,18 +131,21 @@ void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
                     printf(" ");
                     moveToPosXY(obus->posX, obus->posY);
                     printf(" ");
-                    deleteObusById(o, obus->id, map);
+                    deleteObusById(o, obus->id);
                     break;
                 case 1:
                     moveToPosXY(oldX, oldY);
                     printf(" ");
                     moveToPosXY(obus->posX, obus->posY);
-                    printf("\033[31m☎\033[00m");
+                    printf(" ");
+                    moveToPosXY(obus->posX, obus->posY);
+                    printf("\033[37m☎");
+                    deleteObusById(o, obus->id);
                     break;
                 case 2:
                     moveToPosXY(oldX, oldY);
                     printf(" ");
-                    deleteObusById(o, obus->id, map);
+                    deleteObusById(o, obus->id);
                     break;
                 case 3:
                     moveToPosXY(oldX, oldY);
@@ -191,6 +154,9 @@ void moveObus(ObusList *o, char **map, Tank *t, TankList *tList){
                     printf("✴");
                     break;
                 case 4:
+                    moveToPosXY(oldX, oldY);
+                    id_tank_damaged = map[obus->posX][obus->posY];
+                    damage_tank(tList, id_tank_damaged, obus->provenance, map, o);
                     break;
             }
             obus->timer = 0;

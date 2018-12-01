@@ -7,10 +7,10 @@
 #include<fcntl.h>
 #define nbLineTank 5
 #define nbColTank 9 //on fait +1 pour le '\0'
-#define UP 'z'
-#define DOWN 's'
-#define LEFT 'q'
-#define RIGHT 'd'
+#define UP 'A'
+#define DOWN 'B'
+#define LEFT 'D'
+#define RIGHT 'C'
 #define BANG 'g'
 #define nbLineMap 53
 #define nbColMap 186
@@ -33,7 +33,7 @@ struct Tank
     char type; //P player, E enemy
     int timer;
     int condition; //3 on décrémente ensuite
-    //int Mise_a_jour;
+    int sameDir;
 
     int id;
 
@@ -45,14 +45,14 @@ typedef struct Obus Obus;
 
 struct Obus {
 
-    char caractere;
     int posX;
     int posY;
     int id;
 
     char direction;
-    int type;
+    int type; //E
     int timer;
+    int provenance;
     
     Obus *next;
 };
