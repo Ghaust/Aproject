@@ -70,7 +70,22 @@ void checkIfPiouPiouIsAlright(char c){
     }
 }
 
-// Tank *t, TankList *tList
+void youWon(TankList *tList){
+    FILE *fvictoryScreen = NULL;
+    fvictoryScreen = fopen("../models/menus/victory.txt", "r+");
+
+    if(fvictoryScreen != NULL){
+        Tank *t = tList->firstTank;
+            if(t->next == NULL & t->id == 1){
+            system("clear");
+            dispFile(fvictoryScreen);
+
+            fclose(fvictoryScreen);
+            exit(0);
+        }
+    }
+}
+
 int collision(Obus *o, char **map, int oldX, int oldY){
     int oldx, oldy;
     oldx = o->posX;

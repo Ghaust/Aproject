@@ -8,6 +8,7 @@ int main(int argc, char const *argv[])
     while(playerChoice == 3)
         playerChoice = deployMenu();
     playGame_easyMode(playerChoice);
+    playGame_hardMode(playerChoice);
     
     return 0;
 }

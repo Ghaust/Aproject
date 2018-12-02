@@ -23,12 +23,12 @@ void insertNewTank(TankList *list, Tank *tank){
     list->id++;
     tank->id = list->id;
 
-
-    while(list->firstTank->next != NULL){
-        list->firstTank = list->firstTank->next;
+    Tank *actuel = list->firstTank;
+    while(actuel->next != NULL){
+        actuel = actuel->next;
     }
-    list->firstTank->next = tank;
-
+    actuel->next = tank;
+    tank->next = NULL;
 
 }
 
@@ -130,6 +130,7 @@ void insertNewObus(ObusList *list, Obus *obus){
     list->id++;
     obus->id = list->id;
     Obus *actuel = list->firstObus;
+    
     while(actuel->next != NULL){
       actuel=actuel->next;
     }

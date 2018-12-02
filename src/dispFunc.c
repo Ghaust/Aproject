@@ -191,9 +191,10 @@ void playGame_easyMode(int playerChoice){
                     map, c, obusList);
                     
                     if(timer_enemy == 1000){
-                        
+                        timer_enemy = 0;
                         generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 
                         tankG_tub, map, tList);
+                        youWon(tList);
                     }
                     timer_enemy++;  
                     
@@ -203,6 +204,109 @@ void playGame_easyMode(int playerChoice){
                         map, tList, obusList);
 
                     moveObus(obusList, map, tList->firstTank, tList);
+
+            
+                
+                }
+        
+
+		freeMat(nbLineMap, map);
+        freeMat(nbLineTank, tankJ->bodyWork);
+        freeMat(nbLineTank,tankH_ts);
+        freeMat(nbLineTank,tankB_ts);
+        freeMat(nbLineTank,tankD_ts);
+        freeMat(nbLineTank,tankG_ts);
+        freeMat(nbLineTank,tankH_tb);
+        freeMat(nbLineTank,tankB_tb);
+        freeMat(nbLineTank,tankD_tb);
+        freeMat(nbLineTank,tankG_tb);
+        freeMat(nbLineTank,tankH_tub);
+        freeMat(nbLineTank,tankB_tub);
+        freeMat(nbLineTank,tankD_tub);
+        freeMat(nbLineTank,tankG_tub);
+
+
+    //system("stty echo");
+    }
+    else
+        printf("Allez les bleus !\n\n\n");
+}
+
+void playGame_hardMode(int playerChoice){
+
+    if(playerChoice == 2){
+        
+        //régler le pb d'inclusion de fichiers
+        ObusList *obusList = initObusList();
+        Tank *tankJ = initTankPlayer(); 
+        TankList *tList = initTankList(tankJ);
+        
+        
+        int timer_enemy = 0;
+        FILE *fmap = NULL;
+        
+        char **tankH_ts = matrixAlloc(nbLineTank, nbColTank), **tankB_ts = matrixAlloc(nbLineTank, nbColTank), **tankG_ts = matrixAlloc(nbLineTank, nbColTank), **tankD_ts = matrixAlloc(nbLineTank, nbColTank);
+        char **tankH_tb = matrixAlloc(nbLineTank, nbColTank), **tankB_tb = matrixAlloc(nbLineTank, nbColTank), **tankG_tb = matrixAlloc(nbLineTank, nbColTank), **tankD_tb = matrixAlloc(nbLineTank, nbColTank);
+        char **tankH_tub = matrixAlloc(nbLineTank, nbColTank), **tankB_tub = matrixAlloc(nbLineTank, nbColTank), **tankG_tub = matrixAlloc(nbLineTank, nbColTank), **tankD_tub = matrixAlloc(nbLineTank, nbColTank);
+        char **map = matrixAlloc(nbLineMap, nbColMap);
+
+        //On charge ici les 16 matrices de tanks
+        loadTankModel(tankH_ts, tankB_ts, tankG_ts, tankD_ts, 
+        tankH_tb, tankB_tb, tankG_tb, tankD_tb,
+        tankH_tub, tankB_tub, tankG_tub, tankD_tub);
+		
+        
+        replaceMatrixWithAnother(tankD_ts,tankJ->bodyWork);
+
+        //Lié au key_pressed
+        int c;
+       
+        //On charge le tank dans la matrice à la position de départ
+        fmap = fopen("../models/map/map_alph.txt", "r+");
+        if(fmap != NULL){
+            writingMat(nbLineMap, nbColMap, map, fmap);
+           
+            loadTankInMatrix(map, tankJ);
+            fclose(fmap);
+
+        }
+        else
+            exit(-1);
+
+        system("clear");
+        dispMatrix(nbLineMap, nbColMap, map);
+       
+        system("stty -echo");
+        system("setterm -cursor off");
+
+        while (1){
+                     
+
+                    c = key_pressed();
+                
+                    moveTankPlayer(tList->firstTank,
+                    tankH_ts, tankB_ts, tankG_ts, tankD_ts,
+                    tankH_tb, tankB_tb, tankG_tb, tankD_tb,
+                    tankH_tub, tankB_tub, tankG_tub, tankD_tub,
+                    map, c, obusList);
+                    
+                   
+                    if(timer_enemy>6000){
+                        timer_enemy = 0;
+                            generateTankEnemy(tankB_ts, tankB_tb, tankB_tub, tankG_ts, tankG_tb, 
+                            tankG_tub, map, tList);
+                        youWon(tList);
+                    }else
+                            timer_enemy++;
+                        
+            
+                    
+                    moveTankEnemy(tankH_ts, tankB_ts, tankG_ts, tankD_ts,
+                    tankH_tb, tankB_tb, tankG_tb, tankD_tb,
+                    tankH_tub, tankB_tub, tankG_tub, tankD_tub,
+                    map, tList, obusList);
+
+                    moveObus(obusList, map, tankJ, tList);
 
             
                 

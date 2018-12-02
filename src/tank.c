@@ -8,14 +8,10 @@ void loadTankInMatrix(char **mat, Tank *tank){
         l=0;
         for(j=tank->posY; j<tank->posY+nbColTank; j++){
             mat[i][j] = tank->bodyWork[k][l];
-
-
             l++;
         }
         k++;
     }
-
-
 }
 
 
@@ -23,8 +19,8 @@ Tank *initTankEnemy(){
    Tank *tank = malloc(sizeof(Tank));
    int randArmorMax = 0, randArmorMin = 0;
    
-   randArmorMax = rand()%10+1;
-   randArmorMin = rand()%5+1;
+   randArmorMax = rand()%6+1;
+   randArmorMin = rand()%4+1;
 
    tank->bodyWork = matrixAlloc(nbLineTank, nbColTank);
     //On génère aléatoirement les tanks à des positions différentes
@@ -61,64 +57,31 @@ char **tankG_ts, char **tankG_tb, char **tankG_ub,
 char **map, TankList *tankList){
 
     //Deux positions d'apparition de tanks sur la map, en haut et en bas
-    int posX_droite = 2, posY_droite = 94, posX_haut = 16, posY_haut = 175, randPos;
+    int posX_haut = 2, posY_haut = 94, posX_droite = 16, posY_droite = 175, randPos;
     int nbTanks= 10;
-
-    Tank *tank = initTankEnemy();
-
-    do{
-    randPos = rand()%3+1;
-    if(randPos == 1){
+    
+    Tank *tank = NULL;
+    
+    while(nbTanks != 0){
+        tank = initTankEnemy();
+        //randPos = rand()%3+1;
+        //if(randPos == 1){
                 tank->posX = posX_droite;
                 tank->posY = posY_droite;
                 tank->direction = 'G';
-
-                switch(tank->armor){
-                        case 1:
-                            replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
-                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
-                                return;
-                            else{
-                                loadTankInMatrix(map,tank);
-                                moveTank(tank, map);
-                            }
-                            break;
-                        case 2:
-                            replaceMatrixWithAnother(tankB_tb,tank->bodyWork);
-
-                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
-                                return;
-                            else{
-                                loadTankInMatrix(map,tank);
-                                moveTank(tank, map);
-                            }
-                            break;
-                        case 3:
-                            replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
-                            if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
-                                return;
-                            else{
-                                loadTankInMatrix(map,tank);
-                                moveTank(tank, map);
-                            }
-                            break;
-                }
-            }else{
-                tank->posX = posX_haut;
-                tank->posY = posY_haut;
-                tank->direction = 'B';
                 switch(tank->armor){
                         case 1:
                             replaceMatrixWithAnother(tankG_ts,tank->bodyWork);
                             if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
                                 return;
-                           else{
+                            else{
                                 loadTankInMatrix(map,tank);
                                 moveTank(tank, map);
                             }
                             break;
                         case 2:
                             replaceMatrixWithAnother(tankG_tb,tank->bodyWork);
+
                             if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
                                 return;
                             else{
@@ -136,10 +99,46 @@ char **map, TankList *tankList){
                             }
                             break;
                 }
-            }
+         //}
+       /* else if(randPos == 2){
+                    tank->posX = posX_haut;
+                    tank->posY = posY_haut;
+                    tank->direction = 'B';
+
+                    switch(tank->armor){
+                            case 1:
+                                replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
+                                if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                    return;
+                                else{
+                                    loadTankInMatrix(map,tank);
+                                    moveTank(tank, map);
+                                }
+                                break;
+                            case 2:
+                                replaceMatrixWithAnother(tankB_tb,tank->bodyWork);
+
+                                if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                    return;
+                                else{
+                                    loadTankInMatrix(map,tank);
+                                    moveTank(tank, map);
+                                }
+                                break;
+                            case 3:
+                                replaceMatrixWithAnother(tankB_ts,tank->bodyWork);
+                                if(checkIfSpawnIsFree(map, tank->posX, tank->posY) == 0)
+                                    return;
+                                else{
+                                    loadTankInMatrix(map,tank);
+                                    moveTank(tank, map);
+                                }
+                                break;
+                    }
+                }*/
             insertNewTank(tankList, tank);
             nbTanks--;
-    }while(nbTanks != 0);
+    }
 
 
 }
@@ -309,6 +308,106 @@ char **map, TankList *tankList, ObusList *oList){
                     }else   
                             oList->firstObus->timer++;
 
+                }
+            }else if(eTank->armor == 2){
+                switch(randPos){
+                    case 1:
+                        eTank->direction = 'H';
+                            if(isFree(map, eTank) ){
+                                deleteTank(eTank, map);
+                                replaceMatrixWithAnother(tankH_tb,eTank->bodyWork);
+                                eTank->posX--;
+                                moveTank(eTank, map);
+                            }else
+                                break;
+                        break;
+                    case 2:
+                        eTank->direction = 'B';
+                        if(isFree(map, eTank) ){
+                            deleteTank(eTank, map);
+                            replaceMatrixWithAnother(tankB_tb,eTank->bodyWork);
+                            eTank->posX++;
+                            moveTank(eTank, map);
+                        }else
+                            break;
+                        break;
+                    case 3:
+                        eTank->direction = 'G';
+                        if(isFree(map, eTank) ){
+                            deleteTank(eTank, map);
+                            replaceMatrixWithAnother(tankG_tb,eTank->bodyWork);
+                            eTank->posY--;
+                            moveTank(eTank, map);
+                        }else   
+                            break;
+                        break;
+                    case 4:
+                        eTank->direction = 'D';
+                        if(isFree(map, eTank) ){
+                            deleteTank(eTank, map);
+                            replaceMatrixWithAnother(tankD_tb,eTank->bodyWork);
+                            eTank->posY++;
+                            moveTank(eTank, map);
+                        }else
+                            break;
+                        break;
+                    case 5:
+                        if(oList->firstObus->timer>600){
+                            generateObus(*eTank, map, oList);
+                            system("play -q ../sons/obus.wav &");
+                            break;
+                        }else   
+                            oList->firstObus->timer++;
+                }
+            }else if(eTank->armor == 3){
+                switch(randPos){
+                    case 1:
+                        eTank->direction = 'H';
+                            if(isFree(map, eTank) ){
+                                deleteTank(eTank, map);
+                                replaceMatrixWithAnother(tankH_tub,eTank->bodyWork);
+                                eTank->posX--;
+                                moveTank(eTank, map);
+                            }else
+                                break;
+                        break;
+                    case 2:
+                        eTank->direction = 'B';
+                        if(isFree(map, eTank) ){
+                            deleteTank(eTank, map);
+                            replaceMatrixWithAnother(tankB_tub,eTank->bodyWork);
+                            eTank->posX++;
+                            moveTank(eTank, map);
+                        }else
+                            break;
+                        break;
+                    case 3:
+                        eTank->direction = 'G';
+                        if(isFree(map, eTank) ){
+                            deleteTank(eTank, map);
+                            replaceMatrixWithAnother(tankG_tub,eTank->bodyWork);
+                            eTank->posY--;
+                            moveTank(eTank, map);
+                        }else   
+                            break;
+                        break;
+                    case 4:
+                        eTank->direction = 'D';
+                        if(isFree(map, eTank) ){
+                            deleteTank(eTank, map);
+                            replaceMatrixWithAnother(tankD_tub,eTank->bodyWork);
+                            eTank->posY++;
+                            moveTank(eTank, map);
+                        }else
+                            break;
+                        break;
+                    case 5:
+                        if(oList->firstObus->timer>600){
+                            generateObus(*eTank, map, oList);
+                            system("play -q ../sons/obus.wav &");
+                            break;
+                        }else   
+                            oList->firstObus->timer++;
                 }
             }
 
